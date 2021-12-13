@@ -11,14 +11,13 @@
 1. フォークします
 2. 各自の名前のブランチに対してプルリクします
 
+## インフラ作成手順書
+
+[document](/doc/document)
+
 ## ライセンス
 
 Copyright (c) Youble, Inc. All rights reserved.
 
 Licensed under the [MIT](LICENSE.txt) license.
-
-## 手順書へのリンク
-
-[VPC](/doc/vpc)
-[ECS](/doc/ecs)
 
