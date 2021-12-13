@@ -13,7 +13,7 @@
 
 ## インフラ作成手順書
 
-[document](/doc/document)
+[手順書](/doc/document)
 
 ## ライセンス
 
