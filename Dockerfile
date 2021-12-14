@@ -10,4 +10,8 @@ COPY ./src /app
 RUN bundle config --local set path 'vendor/bundle' \
   && bundle install
 
-CMD ["/bin/sh"]
+COPY railsnew.sh /railsnew.sh
+
+RUN chmod +x /railsnew.sh
+
+CMD ["/railsnew.sh"]
