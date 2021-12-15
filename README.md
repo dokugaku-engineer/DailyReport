@@ -11,7 +11,6 @@
 1. フォークします
 2. 各自の名前のブランチに対してプルリクします
 
-
 ## RailsAPIアプリの開発環境構築手順
 
 ## Version
@@ -28,9 +27,8 @@ $ docker image build -t 任意名:latest .
 ```
 
 ```
-$ docker container run -it -p 3000:3000 -v ${PWD}/src:/app [docker-image名]
+$ docker container run -p 3000:3000 -v ${PWD}/src:/app [docker-image名]
 ```
-
 これで、ローカルのディレクトリとコンテナ内のディレクトリがリアルタイムで同期するので、ローカル環境で開発した内容がDockerfileに反映されます。
 
 ## ライセンス
