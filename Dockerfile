@@ -7,7 +7,6 @@ WORKDIR /app
 
 COPY ./src /app
 
-RUN bundle config --local set path 'vendor/bundle' \
-  && bundle install
+RUN bundle install
 
 CMD ["rails", "server", "-b", "0.0.0.0"]
