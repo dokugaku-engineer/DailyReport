@@ -11,7 +11,7 @@
 1. フォークします
 2. 各自の名前のブランチに対してプルリクします
 
-## RailsAPIアプリの開発環境について
+## RailsAPIアプリの開発環境構築手順
 
 ## Version
 
@@ -19,27 +19,17 @@ Ruby 3.0.3
 
 Rails 6.1.4
 
-MySQL8.0
+## 構築手順
 
-## サーバー起動手順
-
-codeをcloneしたら、dbの接続情報は開発環境に合わせてdevelopment.evファイルをpプロジェクトファイル下に作成し、必要な接続情報を定義してください。
-
-ex)development.env
+codeをcloneしたら、開発環境のディレクトリで以下のコマンドを入力します。
 ```
-MYSQL_ROOT_PASSWORD=sample_password
-```
-
-サーバーを起動する場合は開発環境のディレクトリで以下のコマンドを入力します。
-
-```
-$ docker-compose build
+$ docker image build -t 任意名:latest .
 ```
 
 ```
-$ docker-compose up -d
+$ docker container run -p 3000:3000 -v ${PWD}/src:/app [docker-image名]
 ```
-こちらを実行するとrailsサーバが起動します。
+これで、ローカルのディレクトリとコンテナ内のディレクトリがリアルタイムで同期するので、ローカル環境で開発した内容がDockerfileに反映されます。
 
 ## ライセンス
 
