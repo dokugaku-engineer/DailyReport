@@ -22,11 +22,12 @@ Rails 6.1.4
 MySQL8.0
 
 ## 構築手順
-codeをcloneしたら、dbの接続情報は開発環境に合わせてdevelopment.evファイルをpプロジェクトファイル下に作成し、必要な接続情報を定義してください。
+codeをcloneしたら、dbの接続情報を開発環境に合わせて「sample-development.envファイル」を参考に「write_your_password」を必要なパスワードに変更してください。
+なお、「sample-development.env」のファイル名は「development.env」に変更し、プロジェクトファイル直下に置かないと動作しないので気をつけてください。
 
 ex)development.env
 ```
-MYSQL_ROOT_PASSWORD=sample_password
+MYSQL_ROOT_PASSWORD=write_your_password
 ```
 
 サーバーを起動する場合は開発環境のディレクトリで以下のコマンドを入力します。
