@@ -15,6 +15,8 @@
 
 ### [1.VPCの設定](doc/vpc.md)
 
+### [2.RDSの設定](doc/rds.md)
+
 ## ライセンス
 
 Copyright (c) Youble, Inc. All rights reserved.
