@@ -1,2 +1,4 @@
 .vscode/
 !.vscode/settings.json
+development.env
+/src/db/mysql_data
