@@ -70,5 +70,5 @@
 
 ![rds-setting3.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1863296/00f4c610-e233-d1e7-370d-d295c49e81cb.png)
 
-- データベース認証以降ははデフォルト設定
+- データベース認証以降はデフォルト設定
 - 「データベースの作成」ボタンをクリック
