@@ -11,6 +11,10 @@
 1. フォークします
 2. 各自の名前のブランチに対してプルリクします
 
+## インフラ構築の手順
+
+### [1.VPCの設定](doc/vpc.md)
+
 ## ライセンス
 
 Copyright (c) Youble, Inc. All rights reserved.
