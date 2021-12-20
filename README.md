@@ -11,6 +11,13 @@
 1. フォークします
 2. 各自の名前のブランチに対してプルリクします
 
+## インフラ構築手順書  
+
+### [1.VPC構築](/doc/setup-of-VPC.md)
+
+### [2.独自ドメイン登録](/doc/setup-of-Route53.md)
+
+
 ## ライセンス
 
 Copyright (c) Youble, Inc. All rights reserved.
