@@ -39,10 +39,13 @@
 2. 外部ドメイン提供サービスへのRoute53ネームサーバ登録    
     
     - [ ] 作成したホストゾーンの「NS」レコード欄にある、ネームサーバのドメインをコピー  
+        ※画像は参考（お名前.comの例）
         ![WS000003](https://user-images.githubusercontent.com/89679815/146744234-a433dee3-0df4-4f4d-a929-28ff5f4ceeaf.jpg)
 
     - [ ] ドメイン取得元のポータルサイトにて、外部ネームサーバを利用する設定欄にRoute53側でコピーしたドメインを張り付けて登録    
+        ※画像は参考（お名前.comの例）
         ![WS000007](https://user-images.githubusercontent.com/89679815/146744287-04b880e7-fcb0-49b0-a21c-26142ff2d6dc.jpg)  
+        ![WS000008](https://user-images.githubusercontent.com/89679815/146765092-29442dd4-092d-45b6-8ced-0d36c58fb5e2.jpg)
         ![WS000009](https://user-images.githubusercontent.com/89679815/146744489-ffc4ff6c-0af4-4c26-90a2-685c1e748f61.jpg)
 
 
