@@ -13,7 +13,11 @@
 
 ## インフラ構築手順書  
 
-### [VPC構築](/doc/setup-of-VPC.md)
+### [1.VPC構築](/doc/setup-of-VPC.md)
+
+### [2.独自ドメイン登録](/doc/setup-of-Route53.md)
+
+### [3.TLS証明書作成](/doc/setup-of-ACM.md)
 
 ## ライセンス
 
