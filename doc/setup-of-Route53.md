@@ -1,5 +1,5 @@
 # 独自ドメイン取得・登録手順  
-  
+
 ## 【概要】  
 
 日報APIサーバで利用する独自ドメインの取得および登録手順を記載する。
@@ -37,7 +37,6 @@
 
 ![WS000002](https://user-images.githubusercontent.com/89679815/146744165-2c39873b-4e04-46b5-8d18-e2456b3bc051.JPG)
 
-
 ### 2.外部ドメイン提供サービスへのRoute53ネームサーバ登録    
 
 - 作成したホストゾーンの「NS」レコード欄にある、ネームサーバのドメインをコピー  
@@ -53,5 +52,3 @@
 ![WS000008](https://user-images.githubusercontent.com/89679815/146765092-29442dd4-092d-45b6-8ced-0d36c58fb5e2.jpg)
 
 ![WS000009](https://user-images.githubusercontent.com/89679815/146744489-ffc4ff6c-0af4-4c26-90a2-685c1e748f61.jpg)
-
-
