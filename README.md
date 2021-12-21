@@ -19,6 +19,8 @@
 
 ### [3.TLS証明書作成](/doc/setup-of-ACM.md)
 
+### [4.ロードバランサー構築](/doc/setup-of-ALB.md)
+
 ## ライセンス
 
 Copyright (c) Youble, Inc. All rights reserved.
