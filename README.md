@@ -21,6 +21,8 @@
 
 - ### [ロードバランサー構築](/doc/setup-of-ALB.md)
 
+- ### [RDS構築](/doc/setup-of-RDS.md)
+
 ## ライセンス
 
 Copyright (c) Youble, Inc. All rights reserved.
