@@ -71,7 +71,6 @@ AWS上でサーバを稼働させるためには専用のプライベートネ�
 |   IPv4 CIDR ブロック   |     192.168.0.0/24      |
 |          タグ          |        追記なし         |
 
-
 **サブネット2(dr-prod-public-subnet02)**
 
 【VPC】  
@@ -169,11 +168,9 @@ AWS上でサーバを稼働させるためには専用のプライベートネ�
 
 ![WS000007](https://user-images.githubusercontent.com/89679815/146723720-bf1cec1f-4e75-46c7-bbee-cd7095d1b8fa.JPG)    
 
-
 ### 4.ルートテーブル作成  
 
 - 左タブの「ルートテーブル」を押下  
-
 
 - 「ルートテーブルを作成」を押下  
 
@@ -315,7 +312,6 @@ AWS上でサーバを稼働させるためには専用のプライベートネ�
 
 ![WS000001](https://user-images.githubusercontent.com/89679815/146728427-bbcada67-546c-431a-8da6-87616f301a1d.JPG)    
 
-
 - セキュリティグループが作成されていることを確認  
 
 ![WS000007](https://user-images.githubusercontent.com/89679815/146728690-48d4881a-3df9-450c-924a-69baf0242636.JPG)  
@@ -419,8 +415,6 @@ AWS上でサーバを稼働させるためには専用のプライベートネ�
 |    説明    |   http-to-alb    |
 
 ![WS000030](https://user-images.githubusercontent.com/89679815/146729660-217f0552-e395-4a8b-aeae-2d3a498dabdf.JPG)  
-
-
 
 **セキュリティグループ3 (dr-prod-rds-sg01)**
 【インバウンドルール】
