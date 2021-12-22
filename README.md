@@ -17,10 +17,11 @@
 
 - ### [独自ドメイン登録](/doc/setup-of-Route53.md)
 
-- ### [TLS証明書作成](/doc/setup-of-ACM.md)
+- ### [TLS証明書作成](/doc/setup-of-VPC.md)
 
 ## ライセンス
 
 Copyright (c) Youble, Inc. All rights reserved.
 
 Licensed under the [MIT](LICENSE.txt) license.
+
