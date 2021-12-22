@@ -21,7 +21,7 @@
 
 - [ロードバランサー構築](/doc/setup-of-ALB.md)
 
-- [RDS構築](/doc/setup-of-RDS.md)
+- [RDS構築](/doc/setup-of-RDS.md)  
 
 ## ライセンス
 
