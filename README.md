@@ -13,7 +13,7 @@
 
 ## インフラ構築手順書  
 
-- ### [VPC構築](/doc/setup-of-VPC.md)
+- [VPC構築](/doc/setup-of-VPC.md)
 
 ## インフラ構築手順書  
 
