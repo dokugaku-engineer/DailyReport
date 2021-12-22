@@ -17,7 +17,6 @@
 
 - [独自ドメイン登録](/doc/setup-of-Route53.md)
 
-
 ## ライセンス
 
 Copyright (c) Youble, Inc. All rights reserved.
