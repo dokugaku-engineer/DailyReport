@@ -17,6 +17,7 @@
 2. [RDSの設定](doc/rds.md)
 3. [ECRの設定](doc/ecr.md)
 4. [ECSの設定](doc/ecs.md)
+5. [独自ドメインの取得](doc/domain.md)
 
 ## ライセンス
 
