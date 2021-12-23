@@ -34,7 +34,7 @@
 
 ※タイプが「NS」の方の「値/トラフィックのルーティング先」に表示されている4つを ネームサーバー としてメモしておく
 
-![host-root.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1863296/ba7b2ab6-959a-4385-c668-03716d2cf374.png)
+![roothost.jpg](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1863296/06207db5-ec01-520f-abc3-7629ad895a25.jpeg)
 
 ## 3.ネームサーバーの設定
 
