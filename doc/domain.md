@@ -42,7 +42,7 @@
 - 「ドメイン一覧」の中から取得した「ドメイン名」を選択
 - 「ネームサーバー情報」の項目の「ネームサーバーの変更」をクリック
 
-![name-server.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1863296/87842e4d-d528-f631-0549-7f0552d2c0a6.png)
+![nameserver.jpg](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1863296/bd400a42-4963-5766-e95d-d3ab8616446b.jpeg)
 
 - 「その他」タブをクリックし，「その他のネームサーバーを使う」の方にチェックを入れ，先ほどメモした4つのネームサーバーを入れる
 
