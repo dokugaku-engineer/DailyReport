@@ -16,6 +16,7 @@
 1. [VPSの設定](doc/vpc.md)
 2. [RDSの設定](doc/rds.md)
 3. [ECRの設定](doc/ecr.md)
+4. [ECSの設定](doc/ecs.md)
 
 ## ライセンス
 
