@@ -45,4 +45,3 @@ workflows:
           cluster-name: 'daily-report-cluster'
           service-name: 'daily-report-alb-service'
           container-image-name-updates: "container=rails,tag=${CIRCLE_SHA1}"
-          
