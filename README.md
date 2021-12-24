@@ -21,7 +21,7 @@ Rails 6.1.4
 
 MySQL8.0
 
-## 構築手順
+## 開発環境の環境変数
 codeをcloneしたら、dbの接続情報を開発環境に合わせて「sample-development.envファイル」を参考に「write_your_password」を必要なパスワードに変更してください。
 なお、「sample-development.env」のファイル名は「development.env」に変更し、プロジェクトファイル直下に置かないと動作しないので気をつけてください。
 
@@ -41,6 +41,21 @@ $ docker-compose up -d
 ```
 
 こちらを実行するとrailsサーバが起動します。
+
+## 本番環境の環境変数
+
+```
+
+# pruduction MySQL DATABASE_PASSWORD
+
+APP_DATABASE=write_database
+APP_DATABASE_USERNAME=write_database_username
+APP_DATABASE_PASSWORD=write_database_password
+APP_DATABASE_HOST=write_database_host
+APP_DATABASE_PORT=write_database_port
+
+
+```
 
 ## ライセンス
 
