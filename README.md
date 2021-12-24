@@ -16,6 +16,10 @@
 1. [VPSの設定](doc/vpc.md)
 2. [RDSの設定](doc/rds.md)
 3. [ECRの設定](doc/ecr.md)
+4. [ECSの設定](doc/ecs.md)
+5. [独自ドメインの取得](doc/domain.md)
+6. [HTTP化(ACMとALBの設定)](doc/https.md)
+7. [CircleCIの設定](doc/circleci.md)
 
 ## ライセンス
 
