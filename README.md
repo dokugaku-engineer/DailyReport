@@ -13,8 +13,9 @@
 
 ## インフラ構築の手順
 
-[1. VPSの設定](doc/vpc.md)<br>
-[2. RDSの設定](doc/rds.md)
+1. [VPSの設定](doc/vpc.md)
+2. [RDSの設定](doc/rds.md)
+3. [ECRの設定](doc/ecr.md)
 
 ## ライセンス
 
