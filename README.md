@@ -42,10 +42,11 @@ $ docker-compose up -d
 
 こちらを実行するとrailsサーバが起動します。
 
-## 本番環境の環境変数
+## 本番環境の構築手順
 
+[構築手順](/document/production.md)\
+**環境変数**
 ```
-
 # pruduction MySQL DATABASE_PASSWORD
 
 APP_DATABASE=write_database
@@ -53,8 +54,6 @@ APP_DATABASE_USERNAME=write_database_username
 APP_DATABASE_PASSWORD=write_database_password
 APP_DATABASE_HOST=write_database_host
 APP_DATABASE_PORT=write_database_port
-
-
 ```
 
 ## ライセンス
