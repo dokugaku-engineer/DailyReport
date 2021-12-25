@@ -3,7 +3,7 @@
 
 ## 1.CircleCIのファイルを作成する
 
-- 以下のようにCircleCIのファイルを作成
+- 以下のようにCircleCIのファイル(.circleciのファルダに中にconfig.ymlファイル)を作成
 - 今回はcircleciの自動デプロイをkojimaブランチ(fork先でなく自分のリポジトリ)に限定
 
 ```:.circleci/config.yml
