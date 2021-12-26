@@ -5,7 +5,7 @@
 ## 1.CircleCIのファイルを作成する
 
 - 以下のようにCircleCIのファイル(.circleciのファルダに中にconfig.ymlファイル)を作成
-- 今回はcircleciの自動デプロイをkojimaブランチ(fork先でなく自分のリポジトリ)に限定
+- 今回はcircleciの自動デプロイを任意ブランチ(BRANCH)に設定
 
 ```:.circleci/config.yml
 version: 2.1
@@ -26,7 +26,7 @@ workflows:
           tag: "${CIRCLE_SHA1}"
           filters:
             branches:
-              only: kojima
+              only: BRANCH
       - aws-ecs/deploy-service-update:
           requires:
             - aws-ecr/build-and-push-image
@@ -47,7 +47,7 @@ workflows:
           tag: "${CIRCLE_SHA1}"
           filters:
             branches:
-              only: kojima
+              only: BRANCH
       - aws-ecs/deploy-service-update:
           requires:
             - aws-ecr/build-and-push-image
@@ -82,10 +82,11 @@ workflows:
 | AWS_ECR_ACCOUNT_URL | {IAMのアカウントID(数字だけのやつ)}.dkr.ecr.{IAMのリージョン}.amazonaws.com |
 | AWS_REGION | ECR・ECSを作成したリージョン(ap-northeast-1) |
 | AWS_SECRET_ACCESS_KEY | IAMのシークレットアクセスキー |
+| BRANCH | 任意 |
 
-![env.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1863296/a277e81e-7be9-b79b-e280-102164ff8beb.png)
+![env.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1863296/84289c52-f65a-a747-69b9-871b23782cc9.png)
 
-- kojimaブランチにマージされたあと、CircleCIのダッシュボードに行き自動デプロイがSuccessになっているのを確認
+- 任意ブランチにマージされたあと、CircleCIのダッシュボードに行き自動デプロイがSuccessになっているのを確認
 
 ![circle-ok.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1863296/40dd5d89-cfaf-e4dc-5d32-ccd8711a9529.png)
 
