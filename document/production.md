@@ -63,3 +63,8 @@ $ heroku container:release web -a rails-dailyreport
 ```bash
 $ heroku run bundle exec rails db:migrate RAILS_ENV=production -a rails-dailyreport
 ```
+
+本番環境で実行する際はDockerfileに環境変数を定義して実行
+```
+ENV RAILS_ENV=production
+```
