@@ -1,0 +1,47 @@
+version: 2.1
+orbs:
+  aws-ecr: circleci/aws-ecr@6.15
+  aws-ecs: circleci/aws-ecs@2.0.0
+workflows:
+  nginx-deploy:
+    jobs:
+      - aws-ecr/build-and-push-image:
+          account-url: AWS_ECR_ACCOUNT_URL
+          region: AWS_REGION
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          create-repo: true
+          path: 'nginx/'
+          repo: daily_report_nginx
+          tag: "${CIRCLE_SHA1}"
+          filters:
+            branches:
+              only: main
+      - aws-ecs/deploy-service-update:
+          requires:
+            - aws-ecr/build-and-push-image
+          family: 'daily_report_task'
+          cluster-name: 'daily-report-cluster'
+          service-name: 'daily-report-alb-service'
+          container-image-name-updates: "container=nginx,tag=${CIRCLE_SHA1}"
+  rails-deploy:
+    jobs:
+      - aws-ecr/build-and-push-image:
+          account-url: AWS_ECR_ACCOUNT_URL
+          region: AWS_REGION
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          create-repo: true
+          path: './'
+          repo: daily_report_rails_api
+          tag: "${CIRCLE_SHA1}"
+          filters:
+            branches:
+              only: main
+      - aws-ecs/deploy-service-update:
+          requires:
+            - aws-ecr/build-and-push-image
+          family: 'daily_report_task'
+          cluster-name: 'daily-report-cluster'
+          service-name: 'daily-report-alb-service'
+          container-image-name-updates: "container=rails,tag=${CIRCLE_SHA1}"
