@@ -12,15 +12,10 @@
 2. 各自の名前のブランチに対してプルリクします  
 
 ## インフラ構築手順書  
-
 - [VPC構築](/doc/setup-of-VPC.md)
-
 - [独自ドメイン登録](/doc/setup-of-Route53.md)
-
 - [TLS証明書作成](/doc/setup-of-ACM.md)
-
 - [ロードバランサー構築](/doc/setup-of-ALB.md)
-
 - [RDS構築](/doc/setup-of-RDS.md)  
 
 ## ライセンス
