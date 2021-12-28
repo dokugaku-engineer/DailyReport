@@ -20,7 +20,7 @@ RUN apt-get update && \
     docker-php-ext-install pdo_mysql bcmath
 
 
-#Laravelインストール
+#Laravelインストーラーのインストール
 RUN composer global require "laravel/installer"
 
 #ワークディレクトリを移動
