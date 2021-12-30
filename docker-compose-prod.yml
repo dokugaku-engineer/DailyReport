@@ -3,7 +3,7 @@ version: "3"
 services:
   web:
     container_name: web
-    build: 046921553479.dkr.ecr.ap-northeast-1.amazonaws.com/daily_report_web:latest
+    image: 046921553479.dkr.ecr.ap-northeast-1.amazonaws.com/daily_report_web:latest
     ports:
       - "${WEB_HOST_PORT:-80}:80"
     volumes:
@@ -13,7 +13,7 @@ services:
 
   app:
     container_name: app
-    build: 046921553479.dkr.ecr.ap-northeast-1.amazonaws.com/daily_report_app:latest
+    image: 046921553479.dkr.ecr.ap-northeast-1.amazonaws.com/daily_report_app:latest
     volumes:
       - ./src:/var/www
     depends_on:
