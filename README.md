@@ -11,9 +11,9 @@
 1. フォークします
 2. 各自の名前のブランチに対してプルリクします
 
-## RailsAPIアプリの開発環境について
+## RailsAPIアプリの開発環境
 
-## Version
+### -Version-
 
 Ruby 3.0.3
 
@@ -22,25 +22,30 @@ Rails 6.1.4
 MySQL8.0
 
 ## 開発環境の環境変数
-codeをcloneしたら、dbの接続情報を開発環境に合わせて「sample-development.envファイル」を参考に「write_your_password」を必要なパスワードに変更してください。
-なお、「sample-development.env」のファイル名は「development.env」に変更し、プロジェクトファイル直下に置かないと動作しないので気をつけてください。
+dbの接続情報を開発環境に合わせて「sample-development.envファイル」を参考に「write_your_password」を独自のパスワードに変更してください。
+
+「sample-development.env」のファイル名は「development.env」に変更し、プロジェクトファイル直下に置かないと動作しません。
 
 ex)development.env
 ```
 MYSQL_ROOT_PASSWORD=write_your_password
 ```
 
-サーバーを起動する場合は開発環境のディレクトリで以下のコマンドを入力します。
+## 開発環境でのコマンド例
 
+Dockerイメージの構築・再構築
 ```
-$ docker-compose build
+$ docker-compose -f docker-compose.development.yml build
+```
+Railsコマンドの実行
+```
+$ docker-compose -f docker-compose.development.yml run web railsコマンド
 ```
 
+サーバーの起動
 ```
-$ docker-compose up -d
+$ docker-compose -f docker-compose.development.yml up -d
 ```
-
-こちらを実行するとrailsサーバが起動します。
 
 ## 本番環境の構築手順
 
