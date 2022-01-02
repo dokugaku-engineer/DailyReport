@@ -7,22 +7,20 @@
 | ログイン | セッション作成             | sessions#create            | POST     | /login                  |
 |          | セッション削除             | sessions#destroy           | DELETE   | /logout                 |
 | 日報     | slackで投稿された日報の保存                   | slack_posts#create               | POST     | /slack_posts                  |
-|          | slackで投稿された日報更新                   | slack_post#update                | PATCH    | /slack_posts                  |
-|          | slackで投稿された日報削除                   | slack_post#destroy               | DELETE   | /slack_posts                  |
-| 投稿先         | ユーザーによる日報の個別投稿先指定   | endpoints#create        | POST  | /endpoints        |
-|          | ユーザーによる日報の個別投稿先指定解除   | endpoint#destroy         | DELETE   | /endpoint/:id         |
-|          | 組織管理者による日報の組織別投稿先指定   | organizer/endpoints#create        | POST  | organizer/endpoints        |
-|          | 組織管理者による日報の組織別投稿先指定解除   | organizer/endpoint#destroy         | DELETE   | organizer/endpoint/:id         |
-| 組織     | 組織管理者による組織作成       | organizations#create | POST     | /organizations    |
-|      | 組織管理者による組織更新       | organizations#update | PATCH     | /organizations    |
-|          | 組織管理者による組織削除       | organization#destroy | DELETE   | /organization/:id |
-|          | API管理者による組織削除       | admin/organization#destroy | DELETE   | /admin/organization/:id |
+|          | slackで投稿された日報更新                   | slack_posts#update                | PATCH    | /slack_posts                  |
+|          | slackで投稿された日報削除                   | slack_posts#destroy               | DELETE   | /slack_posts                  |
+| 投稿先         | ユーザーによる日報の個別投稿先作成   | slack_to_spreadsheets#create        | POST  | /slack_to_spreadsheets        |
+|         | ユーザーによる日報の個別投稿先更新   | slack_to_spreadsheets#update        | POST  | /slack_to_spreadsheets        |
+|          | ユーザーによる日報の個別投稿先削除   | slack_to_spreadsheets#destroy         | DELETE   | /slack_to_spreadsheets/:id         |
+|          | 組織管理者による日報の組織別投稿先作成   | org_admin/slack_to_spreadsheets#create    | POST  | /org_admin/slack_to_spreadsheets        |
+|          | 組織管理者による日報の組織別投稿先更新   | org_admin/slack_to_spreadsheets#destroy | PATCH | /org_admin/slack_to_spreadsheets/:id         |
+|          | 組織管理者による日報の組織別投稿先削除   | org_admin/slack_to_spreadsheets#destroy | DELETE | /org_admin/slack_to_spreadsheets/:id         |
+| 組織     | 組織作成       | organizations#create | POST     | /organizations    |
+|      | 組織更新       | organizations#update | PATCH     | /organizations    |
+|          | 組織削除       | organizations#destroy | DELETE   | /organizations/:id |
 | ユーザー  | ユーザー新規登録 | users#create               | POST   | /users               |
-|          | ユーザーによるユーザー削除 | user#destroy               | DELETE   | /user/:id               |
-|          | ユーザーによるユーザー更新 | user#destroy               | DELETE   | /user/:id               |
-|          | 組織管理者によるユーザー削除   | organizer/user#destroy         | DELETE   | /organizer/user/:id         |
-|          | API管理者によるユーザー削除   | admin/user#destroy         | DELETE   | /admin/user/:id         |
-
+|          | ユーザー更新 | users#update               | PATCH   | /users/:id               |
+|          | ユーザー削除 | users#destroy               | DELETE   | /users/:id               |
 
 ## ログイン
 
@@ -98,20 +96,26 @@ POST /slack_posts
 
 ### パラメータ（代表的なもの）
 【Slack】
-- token（トークン）
-- team_id（ワークスペースのID）
-- authorizations（認可情報）
-- type（Event APIメソッド）
-- channel（チャンネル）
-- user（ユーザー）
-- text（投稿文）
-- ts（タイムスタンプ）
+- token
+- team_id
+- authorizations
+- type
+- channel
+- user
+- text
+- ts
 
 ### 成功時レスポンス
 {
 "result": true,
 "status": 200,
 "message": "Success"
+}
+
+{
+"result": true,
+"status": 201,
+"message": "Created"
 }
 
 ### 失敗時レスポンス
@@ -139,15 +143,15 @@ PATCH /slack_posts
 
 ### パラメータ（代表的なもの）
 【Slack】
-- token（トークン）
-- team_id（ワークスペースのID）
-- authorizations（認可情報）
-- type（Event APIメソッド）
-- subtype（同メソッドのサブタイプ）
-- channel（チャンネル）
-- user（ユーザー）
-- text（投稿文）
-- ts（タイムスタンプ）
+- token
+- team_id
+- authorizations
+- type
+- subtype
+- channel
+- user
+- text
+- ts
 
 ### 成功時レスポンス
 {
@@ -180,14 +184,14 @@ DELTE /slack_posts
 
 ### パラメータ（代表的なもの）
 【Slack】
-- token（トークン）
-- team_id（ワークスペースのID）
-- authorizations（認可情報）
-- type（Event APIメソッド）
-- subtype（同メソッドのサブタイプ）
-- channel（チャンネル）
-- ts（タイムスタンプ）
-- deleted_ts（削除時のタイムスタンプ）
+- token
+- team_id
+- authorizations
+- type
+- subtype
+- channel
+- ts
+- deleted_ts
 
 ### 成功時レスポンス
 {
@@ -227,14 +231,16 @@ Not Found
 POST /endpoints
 
 ### パラメータ
-- user（ユーザー名）
-- spreadsheet_url（スプレッドシートURL）
+- user
+- spreadsheet_url
+- slack_workspace
+- slack_channel
 
 ### 成功時レスポンス
 {
 "result": true,
-"status": 200,
-"message": "Success"
+"status": 201,
+"message": "Created"
 }
 
 ### 失敗時レスポンス
@@ -255,19 +261,22 @@ Forbidden
 ## ユーザーによる日報の個別投稿先指定削除
 
 ### 機能概要
-指定したスプレッドシートの投稿先を削除する
+指定したスプレッドシートの投稿先を更新する
 
 ### リクエスト
-Delete /endpoint/:id
+PATCH /endpoint/:id
 
 ### パラメータ
-- user（ユーザー名）
+- user
+- spreadsheet_url
+- slack_workspace
+- slack_channel
 
 ### 成功時レスポンス
 {
 "result": true,
-"status": 200,
-"message": "Success"
+"status": 204,
+"message": "No Content"
 }
 
 ### 失敗時レスポンス
@@ -295,16 +304,15 @@ Not Found
 ## 組織管理者によるスプレッドシートへの日報の投稿先指定
 
 ### 機能概要
-- 組織メンバーの日報の投稿先をスプレッドシート単位、シート単位で指定する
+組織メンバーの日報の投稿先をスプレッドシート単位、シート単位で指定する
 
 ### リクエスト
 POST admin/endpoints
 
 ### パラメータ
-- user（ユーザー名）
-- spreadsheet_url（スプレッドシートURL）
-- sheet_numebr（シート番号）
-- workspace（slackのワークスペース）
+- name
+- spreadsheet_url
+- sheet_numebr
 
 ### 成功時レスポンス
 {
@@ -337,7 +345,7 @@ Forbidden
 Delete admin/endpoint/:id
 
 ### パラメータ
-- user（ユーザー名）
+- name
 
 ### 成功時レスポンス
 {
@@ -377,27 +385,36 @@ Not Found
 POST /organizations
 
 ### パラメータ
-- organization
+- name
 
 ### 成功時レスポンス
+```
 {
 "result": true,
 "status": 200,
 "message": "Success"
 }
+```
 
 ### 失敗時レスポンス
+Bad Request
+
+```
 {
 "result": false,
 "status": 400,
 "message": "Bad Request"
 }
+```
 
+Forbidden
+```
 {
 "result": false,
 "status": 403,
 "message": "Forbidden"
 }
+```
 
 ## 組織管理者による組織更新
 
@@ -408,27 +425,36 @@ POST /organizations
 PATCH /organizations
 
 ### パラメータ
-- organization
+- name
 
 ### 成功時レスポンス
+```
 {
 "result": true,
 "status": 200,
 "message": "Success"
 }
+```
 
 ### 失敗時レスポンス
+Bad Request
+
+```
 {
 "result": false,
 "status": 400,
 "message": "Bad Request"
 }
+```
 
+Forbidden
+```
 {
 "result": false,
 "status": 403,
 "message": "Forbidden"
 }
+```
 
 ## 組織管理者による組織削除
 
@@ -438,34 +464,49 @@ PATCH /organizations
 ### リクエスト
 DELETE /organizations
 
+### パラメータ
+- name
+
 ### 成功時レスポンス
+
+```
 {
 "result": true,
-"status": 200,
-"message": "Success"
+"status": 204,
+"message": "No Content"
 }
+```
 
 ### 失敗時レスポンス
 Bad Request
+
+```
 {
 "result": false,
 "status": 400,
 "message": "Bad Request"
 }
+```
 
 Forbidden
+
+```
 {
 "result": false,
 "status": 403,
 "message": "Forbidden"
 }
+```
 
 Not Found
+
+```
 {
 "result": false,
 "status": 404,
 "message": "Not Found",
 }
+```
 
 ## API管理者による組織削除
 
@@ -475,15 +516,22 @@ API管理者が組織（会社など任意の団体）を削除する
 ### リクエスト
 DELETE /admin/organizations
 
+### パラメータ
+- name
+
 ### 成功時レスポンス
+```
 {
 "result": true,
-"status": 200,
-"message": "Success"
+"status": 204,
+"message": "No Content"
 }
+```
 
 ### 失敗時レスポンス
 Bad Request
+
+```
 {
 "result": false,
 "status": 400,
@@ -491,18 +539,24 @@ Bad Request
 }
 
 Forbidden
+
+```
 {
 "result": false,
 "status": 403,
 "message": "Forbidden"
 }
+```
 
 Not Found
+
+```
 {
 "result": false,
 "status": 404,
 "message": "Not Found",
 }
+```
 
 ## ユーザー新規登録
 
@@ -514,25 +568,30 @@ Not Found
 POST /users
 
 ### パラメータ
-- user（ユーザー名）
-- email（メールアドレス）
-- organizer
+- name
+- email
+- admin_org
 
 ### 成功時レスポンス
+
+```
 {
 "result": true,
 "status": 200,
 "message": "Success"
 }
+```
 
 ### 失敗時レスポンス
 Bad Request
+
+```
 {
 "result": false,
 "status": 400,
 "message": "Bad Request"
 }
-
+```
 ## ユーザー更新
 
 ### 機能概要
@@ -542,24 +601,27 @@ Bad Request
 POST /users
 
 ### パラメータ
-- user（ユーザー名）
-- email（メールアドレス）
-- organizer
+- name
 
 ### 成功時レスポンス
+```
 {
 "result": true,
 "status": 200,
 "message": "Success"
 }
+```
 
 ### 失敗時レスポンス
 Bad Request
+
+```
 {
 "result": false,
 "status": 400,
 "message": "Bad Request"
 }
+```
 
 ## ユーザー削除
 
@@ -570,34 +632,45 @@ Bad Request
 DELETE /user/:id
 
 ### 成功時レスポンス
+
+```
 {
 "result": true,
-"status": 200,
-"message": "Success"
+"status": 204,
+"message": "No Content"
 }
+```
 
 ### 失敗時レスポンス
 Bad Request
+
+```
 {
 "result": false,
 "status": 400,
 "message": "Bad Request"
 }
+```
 
 Forbidden
+
+```
 {
 "result": false,
 "status": 403,
 "message": "Forbidden"
 }
+```
 
 Not Found
+
+```
 {
 "result": false,
 "status": 404,
 "message": "Not Found",
 }
-
+```
 
 ## 組織管理者によるユーザー削除
 
@@ -608,33 +681,45 @@ Not Found
 DELETE /admin/user/:id
 
 ### 成功時レスポンス
+
+```
 {
 "result": true,
-"status": 200,
-"message": "Success"
+"status": 204,
+"message": "No Content"
 }
+```
 
 ### 失敗時レスポンス
 Bad Request
+
+```
 {
 "result": false,
 "status": 400,
 "message": "Bad Request"
 }
+```
 
 Forbidden
+
+```
 {
 "result": false,
 "status": 403,
 "message": "Forbidden"
 }
+```
 
 Not Found
+
+```
 {
 "result": false,
 "status": 404,
 "message": "Not Found",
 }
+```
 
 ## API管理者によるユーザー削除
 
@@ -645,28 +730,39 @@ Not Found
 DELETE /admin/user/:id
 
 ### 成功時レスポンス
+
+```
 {
 "result": true,
-"status": 200,
-"message": "Success"
+"status": 204,
+"message": "No Content"
 }
+```
 
 ### 失敗時レスポンス
 Bad Request
+
+```
 {
 "result": false,
 "status": 400,
 "message": "Bad Request"
 }
+```
 
 Forbidden
+
+```
 {
 "result": false,
 "status": 403,
 "message": "Forbidden"
 }
+```
 
 Not Found
+
+```
 {
 "result": false,
 "status": 404,
