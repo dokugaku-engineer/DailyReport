@@ -13,7 +13,7 @@
 |         | ユーザーによる日報の個別投稿先更新   | slack_to_spreadsheets#update        | POST  | /slack_to_spreadsheets        |
 |          | ユーザーによる日報の個別投稿先削除   | slack_to_spreadsheets#destroy         | DELETE   | /slack_to_spreadsheets/:id         |
 |          | 組織管理者による日報の組織別投稿先作成   | org_admin/slack_to_spreadsheets#create    | POST  | /org_admin/slack_to_spreadsheets        |
-|          | 組織管理者による日報の組織別投稿先更新   | org_admin/slack_to_spreadsheets#destroy | PATCH | /org_admin/slack_to_spreadsheets/:id         |
+|          | 組織管理者による日報の組織別投稿先更新   | org_admin/slack_to_spreadsheets#update | PATCH | /org_admin/slack_to_spreadsheets/:id         |
 |          | 組織管理者による日報の組織別投稿先削除   | org_admin/slack_to_spreadsheets#destroy | DELETE | /org_admin/slack_to_spreadsheets/:id         |
 | 組織     | 組織作成       | organizations#create | POST     | /organizations    |
 |      | 組織更新       | organizations#update | PATCH     | /organizations    |
@@ -301,7 +301,7 @@ Not Found
 "message": "Not Found",
 }
 
-## 組織管理者によるスプレッドシートへの日報の投稿先指定
+## 組織管理者によるスプレッドシートへの日報の投稿先作成
 
 ### 機能概要
 組織メンバーの日報の投稿先をスプレッドシート単位、シート単位で指定する
@@ -312,7 +312,7 @@ POST admin/endpoints
 ### パラメータ
 - name
 - spreadsheet_url
-- sheet_numebr
+- sheet_number
 
 ### 成功時レスポンス
 {
@@ -336,22 +336,62 @@ Forbidden
 "message": "Forbidden",
 }
 
+## 組織管理者によるスプレッドシートへの日報の投稿先更新
+
+### 機能概要
+組織メンバーの日報の投稿先をスプレッドシート単位、シート単位で更新する
+
+### リクエスト
+PATCH /org_admin/slack_to_spreadsheets/{org_id}
+
+### パラメータ
+- name
+- spreadsheet_url
+- sheet_number
+- org_id
+
+### 成功時レスポンス
+{
+"result": true,
+"status": 200,
+"message": "Success"
+}
+
+### 失敗時レスポンス
+Bad Request
+{
+"result": false,
+"status": 400,
+"message": "Bad Request",
+}
+
+Forbidden
+{
+"result": false,
+"status": 401,
+"message": "Forbidden",
+}
+
+
 ## 組織管理者による日報の投稿先指定削除
 
 ### 機能概要
 指定したスプレッドシートの投稿先を削除する
 
 ### リクエスト
-DELETE admin/endpoints/:id
+DELETE /org_admin/slack_to_spreadsheets/{org_id}
 
 ### パラメータ
 - name
+- spreadsheet_url
+- sheet_number
+- org_id
 
 ### 成功時レスポンス
 {
 "result": true,
 "status": 204,
-"message": "No content"
+"message": "No Content"
 }
 
 ### 失敗時レスポンス
