@@ -10,8 +10,8 @@
 |          | slackで投稿された日報更新             | slack_posts#update                      | PATCH          | /v1/slack_posts                            |
 |          | slackで投稿された日報削除             | slack_posts#destroy                     | DELETE         | /v1/slack_posts                            |
 | 投稿先    | ユーザーによる日報の個別投稿先作成      | slack_to_spreadsheets#create             | POST           | /v1/slack_to_spreadsheets                 |
-|          | ユーザーによる日報の個別投稿先更新      | slack_to_spreadsheets#update            | PATCH           | /v1/slack_to_spreadsheets                  |
-|          | ユーザーによる日報の個別投稿先削除      | slack_to_spreadsheets#destroy            | DELETE        | /v1/slack_to_spreadsheets/user_id           |
+|          | ユーザーによる日報の個別投稿先更新      | slack_to_spreadsheets#update            | PATCH           | /v1/slack_to_spreadsheets/:id                  |
+|          | ユーザーによる日報の個別投稿先削除      | slack_to_spreadsheets#destroy            | DELETE        | /v1/slack_to_spreadsheets/:id           |
 |          | 組織管理者による日報の組織別投稿先作成   | org_admin/slack_to_spreadsheets#create   | POST          | /v1/org_admin/org_id/slack_to_spreadsheets |
 |          | 組織管理者による日報の組織別投稿先更新   | org_admin/slack_to_spreadsheets#update   | PATCH         | /v1/org_admin/slack_to_spreadsheets/org_id |
 |          | 組織管理者による日報の組織別投稿先削除   | org_admin/slack_to_spreadsheets#destroy  | DELETE        | /v1/org_admin/slack_to_spreadsheets/org_id |
@@ -90,7 +90,7 @@ Unauthorized
 
 ### 機能概要
 - slackで投稿された日報を、投稿したユーザーがユーザーデータベースに含まれているか検証してから、データベースやSpreadSheetなどに保存する
-
+- どの組織から、またはどのチャンネルから投稿されたのものか判定するためにパラメータにteam_id、channelの値を使用して判定する
 ### リクエスト
 POST /slack_posts
 
@@ -137,6 +137,7 @@ Unauthorized
 
 ### 機能概要
 - slackで投稿された日報について、どのユーザーのどの投稿かを検証してからデータベースやSpreadSheetなどを更新する
+- どの組織から、またはどのチャンネルから投稿されたのものか判定するためにパラメータにteam_id、channelの値を使用して判定する
 
 ### リクエスト
 PATCH /slack_posts
@@ -177,8 +178,8 @@ Unauthorized
 ## slackで投稿された日報の削除
 
 ### 機能概要
-slackで投稿された日報を、どのユーザーのどの投稿かを検証してからデータベースやSpreadSheetなどから削除する
-
+- slackで投稿された日報を、どのユーザーのどの投稿かを検証してからデータベースやSpreadSheetなどから削除する
+- どの組織から、またはどのチャンネルから投稿されたのものか判定するためにパラメータにteam_id、slack_channelの値を使用して判定する
 ### リクエスト
 DELTE /slack_posts
 
@@ -189,7 +190,7 @@ DELTE /slack_posts
 - authorizations
 - type
 - subtype
-- channel
+- slack_channel
 - ts
 - deleted_ts
 
@@ -228,7 +229,7 @@ Not Found
 各ユーザー個別のスプレッドシートに日報の投稿先を指定する
 
 ### リクエスト
-POST /endpoints
+POST /v1/slack_to_spreadsheets
 
 ### パラメータ
 - user
@@ -258,13 +259,56 @@ Forbidden
 "message": "Forbidden",
 }
 
-## ユーザーによる日報の個別投稿先指定削除
+## ユーザーによる日報の個別投稿先指定更新
 
 ### 機能概要
 指定したスプレッドシートの投稿先を更新する
 
 ### リクエスト
-PATCH /endpoints/:id
+PATCH /v1/slack_to_spreadsheets/:id
+
+### パラメータ
+- user
+- spreadsheet_url
+- slack_workspace
+- slack_channel
+
+### 成功時レスポンス
+{
+"result": true,
+"status": 204,
+"message": "No Content"
+}
+
+### 失敗時レスポンス
+Bad Request
+{
+"result": false,
+"status": 400,
+"message": "Bad Request",
+}
+
+Forbidden
+{
+"result": false,
+"status": 401,
+"message": "Forbidden",
+}
+
+Not Found
+{
+"result": false,
+"status": 404,
+"message": "Not Found",
+}
+
+## ユーザーによる日報の個別投稿先指定削除
+
+### 機能概要
+指定したスプレッドシートの投稿先を削除する
+
+### リクエスト
+DELETE /v1/slack_to_spreadsheets/:id
 
 ### パラメータ
 - user
@@ -307,7 +351,7 @@ Not Found
 組織メンバーの日報の投稿先をスプレッドシート単位、シート単位で指定する
 
 ### リクエスト
-POST /org_admin/slack_to_spreadsheets/{org_id}
+POST /v1/org_admin/slack_to_spreadsheets/org_id
 
 ### パラメータ
 - name
@@ -340,16 +384,17 @@ Forbidden
 ## 組織管理者によるスプレッドシートへの日報の投稿先更新
 
 ### 機能概要
-組織メンバーの日報の投稿先をスプレッドシート単位、シート単位で更新する
-
+- 組織メンバーの日報の投稿先をスプレッドシート単位、シート単位で更新する
+- グループ単位のスプレッドシートの更新はslack_channelをパラメータに指定する
 ### リクエスト
-PATCH /org_admin/slack_to_spreadsheets/{org_id}
+PATCH /v1/org_admin/slack_to_spreadsheets/org_id
 
 ### パラメータ
 - name
 - spreadsheet_url
 - sheet_number
 - org_id
+- slack_channel
 
 ### 成功時レスポンス
 {
@@ -377,16 +422,17 @@ Forbidden
 ## 組織管理者による日報の投稿先指定削除
 
 ### 機能概要
-指定したスプレッドシートの投稿先を削除する
-
+- 指定したスプレッドシートの投稿先を削除する
+- グループ単位のスプレッドシートの削除はslack_channelをパラメータに指定する
 ### リクエスト
-DELETE /org_admin/slack_to_spreadsheets/{org_id}
+DELETE /v1/org_admin/slack_to_spreadsheets/org_id
 
 ### パラメータ
 - name
 - spreadsheet_url
 - sheet_number
 - org_id
+- slack_channel
 
 ### 成功時レスポンス
 {
@@ -423,7 +469,7 @@ Not Found
 組織（会社など任意の団体）を作成する（組織管理者のみ可能）
 
 ### リクエスト
-POST /organizations
+POST /v1/organizations
 
 ### パラメータ
 - name
@@ -463,7 +509,7 @@ Forbidden
 組織（会社など任意の団体）を更新する（組織管理者のみ可能）
 
 ### リクエスト
-PATCH /organizations
+PATCH /v1/organizations
 
 ### パラメータ
 - name
@@ -555,7 +601,7 @@ Not Found
 API管理者が組織（会社など任意の団体）を削除する
 
 ### リクエスト
-DELETE /admin/organizations
+DELETE /organizations/org_id
 
 ### パラメータ
 - name
@@ -611,7 +657,7 @@ POST /v1/auth
 ### パラメータ
 - name
 - email
-- admin_org
+- org_admin
 - password
 
 ### 成功時レスポンス
@@ -645,7 +691,7 @@ PATCH /v1/auth
 ### パラメータ
 - name
 - email
-- admin_org
+- org_admin
 - password
 
 ### 成功時レスポンス
@@ -723,7 +769,7 @@ Not Found
 組織内であればどのユーザーをも削除できる（組織管理者のみ可能）
 
 ### リクエスト
-DELETE /admin/user/:id
+DELETE /org_admin/users/:id
 
 ### 成功時レスポンス
 
@@ -769,10 +815,10 @@ Not Found
 ## API管理者によるユーザー削除
 
 ### 機能概要
-どのユーザーをも削除できる（API管理者のみ可能）
-
+- どのユーザーをも削除できる（API管理者のみ可能）
+- scopeで権限付与
 ### リクエスト
-DELETE /admin/user/:id
+DELETE /org_admin/user/:id
 
 ### 成功時レスポンス
 
