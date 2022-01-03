@@ -25,10 +25,10 @@
 ## ログイン
 
 ### 機能概要
-- SlackのOpenID Connectで認証し、セッションを構築する
+- devise_token_authで認証し、セッションを構築する
 
 ### リクエスト
-POST /login
+POST /v1/auth/sign_in
 
 ### パラメータ（代表的なもの）
 - access_token
@@ -62,7 +62,7 @@ Unauthorized
 ログインし、セッションを破棄する
 
 ### リクエスト
-DELETE /logout
+DELETE /v1/auth/sign_out
 
 ### 成功時レスポンス
 {
@@ -606,12 +606,13 @@ Not Found
 - 組織管理者になる登録もこちらで行う
 
 ### リクエスト
-POST /users
+POST /v1/auth
 
 ### パラメータ
 - name
 - email
 - admin_org
+- password
 
 ### 成功時レスポンス
 
@@ -639,10 +640,13 @@ Bad Request
 - ユーザーの設定を変更する
 
 ### リクエスト
-POST /users
+PATCH /v1/auth
 
 ### パラメータ
 - name
+- email
+- admin_org
+- password
 
 ### 成功時レスポンス
 ```
@@ -670,7 +674,7 @@ Bad Request
 各ユーザーが自分自身のみ削除できる
 
 ### リクエスト
-DELETE /user/:id
+DELETE /v1/auth
 
 ### 成功時レスポンス
 
