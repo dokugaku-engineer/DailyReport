@@ -67,8 +67,8 @@ DELETE /logout
 ### 成功時レスポンス
 {
 "result": true,
-"status": 200,
-"message": "Success"
+"status": 204,
+"message": "No Content"
 }
 
 ### 失敗時レスポンス
@@ -342,7 +342,7 @@ Forbidden
 指定したスプレッドシートの投稿先を削除する
 
 ### リクエスト
-Delete admin/endpoints/:id
+DELETE admin/endpoints/:id
 
 ### パラメータ
 - name
@@ -350,8 +350,8 @@ Delete admin/endpoints/:id
 ### 成功時レスポンス
 {
 "result": true,
-"status": 200,
-"message": "Success"
+"status": 204,
+"message": "No content"
 }
 
 ### 失敗時レスポンス
