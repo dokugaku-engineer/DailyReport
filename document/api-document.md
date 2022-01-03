@@ -2,25 +2,25 @@
 
 ## API一覧
 
-| リソース | 機能                       | コントローラ/メソッド      | メソッド | URI                     |
-| :------: | :------------------------: | :------------------------: | :------: | :---------------------: |
-| ログイン | セッション作成             | sessions#create            | POST     | /login                  |
-|          | セッション削除             | sessions#destroy           | DELETE   | /logout                 |
-| 日報     | slackで投稿された日報の保存                   | slack_posts#create               | POST     | /slack_posts                  |
-|          | slackで投稿された日報更新                   | slack_posts#update                | PATCH    | /slack_posts                  |
-|          | slackで投稿された日報削除                   | slack_posts#destroy               | DELETE   | /slack_posts                  |
-| 投稿先         | ユーザーによる日報の個別投稿先作成   | slack_to_spreadsheets#create        | POST  | /slack_to_spreadsheets        |
-|         | ユーザーによる日報の個別投稿先更新   | slack_to_spreadsheets#update        | POST  | /slack_to_spreadsheets        |
-|          | ユーザーによる日報の個別投稿先削除   | slack_to_spreadsheets#destroy         | DELETE   | /slack_to_spreadsheets/:id         |
-|          | 組織管理者による日報の組織別投稿先作成   | org_admin/slack_to_spreadsheets#create    | POST  | /org_admin/slack_to_spreadsheets/:id        |
-|          | 組織管理者による日報の組織別投稿先更新   | org_admin/slack_to_spreadsheets#update | PATCH | /org_admin/slack_to_spreadsheets/:id         |
-|          | 組織管理者による日報の組織別投稿先削除   | org_admin/slack_to_spreadsheets#destroy | DELETE | /org_admin/slack_to_spreadsheets/:id         |
-| 組織     | 組織作成       | organizations#create | POST     | /organizations    |
-|      | 組織更新       | organizations#update | PATCH     | /organizations    |
-|          | 組織削除       | organizations#destroy | DELETE   | /organizations/:id |
-| ユーザー  | ユーザー新規登録 | users#create               | POST   | /users               |
-|          | ユーザー更新 | users#update               | PATCH   | /users/:id               |
-|          | ユーザー削除 | users#destroy               | DELETE   | /users/:id               |
+| リソース  | 機能                                | コントローラ/メソッド                     |   メソッド        |      URI                                  |
+| :------: | :--------------------------------: | :------------------------------------: | :------------: | :-----------------------------------------:|
+| ログイン   | セッション作成                       | devise_token_auth/sessions#create      | POST           | /v1/auth/sign_in                           |
+|          | セッション削除                       | devise_token_auth/sessions#destroy      | DELETE         | /v1/auth/sign_out                          |
+| 日報      | slackで投稿された日報の保存           | slack_posts#create                      | POST           | /v1/slack_posts                            |
+|          | slackで投稿された日報更新             | slack_posts#update                      | PATCH          | /v1/slack_posts                            |
+|          | slackで投稿された日報削除             | slack_posts#destroy                     | DELETE         | /v1/slack_posts                            |
+| 投稿先    | ユーザーによる日報の個別投稿先作成      | slack_to_spreadsheets#create             | POST           | /v1/slack_to_spreadsheets                 |
+|          | ユーザーによる日報の個別投稿先更新      | slack_to_spreadsheets#update            | PATCH           | /v1/slack_to_spreadsheets                  |
+|          | ユーザーによる日報の個別投稿先削除      | slack_to_spreadsheets#destroy            | DELETE        | /v1/slack_to_spreadsheets/user_id           |
+|          | 組織管理者による日報の組織別投稿先作成   | org_admin/slack_to_spreadsheets#create   | POST          | /v1/org_admin/org_id/slack_to_spreadsheets |
+|          | 組織管理者による日報の組織別投稿先更新   | org_admin/slack_to_spreadsheets#update   | PATCH         | /v1/org_admin/slack_to_spreadsheets/org_id |
+|          | 組織管理者による日報の組織別投稿先削除   | org_admin/slack_to_spreadsheets#destroy  | DELETE        | /v1/org_admin/slack_to_spreadsheets/org_id |
+| 組織      | 組織作成                            | organizations#create                     | POST          | /v1/organizations                          |
+|          | 組織更新                            | organizations#update                     | PATCH         | /v1/organizations                          |
+|          | 組織削除                            | organizations#destroy                    | DELETE        | /v1/organizations/org_id                   |
+| ユーザー  | ユーザー新規登録                      | devise_token_auth/registrations#create   | POST          | /v1/auth                                   |
+|          | ユーザー更新                         | devise_token_auth/registrations#update   | PATCH         | /v1/auth                                   |
+|          | ユーザー削除                         | devise_token_auth/registrations#destroy  | DELETE        | /v1/auth                                   |
 
 ## ログイン
 
