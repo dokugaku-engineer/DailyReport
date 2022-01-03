@@ -264,7 +264,7 @@ Forbidden
 指定したスプレッドシートの投稿先を更新する
 
 ### リクエスト
-PATCH /endpoint/:id
+PATCH /endpoints/:id
 
 ### パラメータ
 - user
@@ -342,7 +342,7 @@ Forbidden
 指定したスプレッドシートの投稿先を削除する
 
 ### リクエスト
-Delete admin/endpoint/:id
+Delete admin/endpoints/:id
 
 ### パラメータ
 - name
@@ -391,8 +391,8 @@ POST /organizations
 ```
 {
 "result": true,
-"status": 200,
-"message": "Success"
+"status": 201,
+"message": "Created"
 }
 ```
 
@@ -577,8 +577,8 @@ POST /users
 ```
 {
 "result": true,
-"status": 200,
-"message": "Success"
+"status": 201,
+"message": "Created"
 }
 ```
 
