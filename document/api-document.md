@@ -12,7 +12,7 @@
 | 投稿先         | ユーザーによる日報の個別投稿先作成   | slack_to_spreadsheets#create        | POST  | /slack_to_spreadsheets        |
 |         | ユーザーによる日報の個別投稿先更新   | slack_to_spreadsheets#update        | POST  | /slack_to_spreadsheets        |
 |          | ユーザーによる日報の個別投稿先削除   | slack_to_spreadsheets#destroy         | DELETE   | /slack_to_spreadsheets/:id         |
-|          | 組織管理者による日報の組織別投稿先作成   | org_admin/slack_to_spreadsheets#create    | POST  | /org_admin/slack_to_spreadsheets        |
+|          | 組織管理者による日報の組織別投稿先作成   | org_admin/slack_to_spreadsheets#create    | POST  | /org_admin/slack_to_spreadsheets/:id        |
 |          | 組織管理者による日報の組織別投稿先更新   | org_admin/slack_to_spreadsheets#update | PATCH | /org_admin/slack_to_spreadsheets/:id         |
 |          | 組織管理者による日報の組織別投稿先削除   | org_admin/slack_to_spreadsheets#destroy | DELETE | /org_admin/slack_to_spreadsheets/:id         |
 | 組織     | 組織作成       | organizations#create | POST     | /organizations    |
@@ -307,12 +307,13 @@ Not Found
 組織メンバーの日報の投稿先をスプレッドシート単位、シート単位で指定する
 
 ### リクエスト
-POST admin/endpoints
+POST /org_admin/slack_to_spreadsheets/{org_id}
 
 ### パラメータ
 - name
 - spreadsheet_url
 - sheet_number
+- org_id
 
 ### 成功時レスポンス
 {
