@@ -12,12 +12,12 @@
 | 投稿先    | ユーザーによる日報の個別投稿先作成      | slack_to_spreadsheets#create             | POST           | /v1.0.0/slack_to_spreadsheets                 |
 |          | ユーザーによる日報の個別投稿先更新      | slack_to_spreadsheets#update            | PATCH           | /v1.0.0/slack_to_spreadsheets/:id              |
 |          | ユーザーによる日報の個別投稿先削除      | slack_to_spreadsheets#destroy            | DELETE        | /v1.0.0/slack_to_spreadsheets/:id               |
-|          | 組織管理者による日報の組織別投稿先作成   | org_admin/slack_to_spreadsheets#create   | POST          | /v1.0.0/org_admin/org_id/slack_to_spreadsheets |
-|          | 組織管理者による日報の組織別投稿先更新   | org_admin/slack_to_spreadsheets#update   | PATCH         | /v1.0.0/org_admin/slack_to_spreadsheets/org_id |
-|          | 組織管理者による日報の組織別投稿先削除   | org_admin/slack_to_spreadsheets#destroy  | DELETE        | /v1.0.0/org_admin/slack_to_spreadsheets/org_id |
+|          | 組織管理者による日報の組織別投稿先作成   | org_admin/slack_to_spreadsheets#create   | POST          | /v1.0.0/org_admin/:org_id/slack_to_spreadsheets |
+|          | 組織管理者による日報の組織別投稿先更新   | org_admin/slack_to_spreadsheets#update   | PATCH         | /v1.0.0/org_admin/slack_to_spreadsheets/:org_id |
+|          | 組織管理者による日報の組織別投稿先削除   | org_admin/slack_to_spreadsheets#destroy  | DELETE        | /v1.0.0/org_admin/slack_to_spreadsheets/:org_id |
 | 組織      | 組織作成                            | organizations#create                     | POST          | /v1.0.0/organizations                          |
-|          | 組織更新                            | organizations#update                     | PATCH         | /v1.0.0/organizations/org_id                    |
-|          | 組織削除                            | organizations#destroy                    | DELETE        | /v1.0.0/organizations/org_id                   |
+|          | 組織更新                            | organizations#update                     | PATCH         | /v1.0.0/organizations/:org_id                    |
+|          | 組織削除                            | organizations#destroy                    | DELETE        | /v1.0.0/organizations/:org_id                   |
 | ユーザー  | ユーザー新規登録                      | devise_token_auth/registrations#create   | POST          | /v1.0.0/auth                                   |
 |          | ユーザー更新                         | devise_token_auth/registrations#update   | PATCH         | /v1.0.0/auth                                   |
 |          | ユーザー削除                         | devise_token_auth/registrations#destroy  | DELETE        | /v1.0.0/auth                                   |
@@ -388,7 +388,7 @@ Forbidden
 - 組織メンバーの日報の投稿先をスプレッドシート単位、シート単位で更新する
 - グループ単位のスプレッドシートの更新はslack_channelをパラメータに指定する
 ### リクエスト
-PATCH /v1.0.0/org_admin/slack_to_spreadsheets/org_id
+PATCH /v1.0.0/org_admin/slack_to_spreadsheets/:org_id
 
 ### パラメータ
 - name
@@ -428,7 +428,7 @@ Forbidden
 - グループ単位のスプレッドシートの削除はslack_channelをパラメータに指定する
 
 ### リクエスト
-DELETE /v1.0.0/org_admin/slack_to_spreadsheets/org_id
+DELETE /v1.0.0/org_admin/slack_to_spreadsheets/:org_id
 
 ### パラメータ
 - name
@@ -473,7 +473,7 @@ Not Found
 組織（会社など任意の団体）を作成する（組織管理者のみ可能）
 
 ### リクエスト
-POST /v1.0.0/organizations
+POST /v1.0.0/organizations/:org_id
 
 ### パラメータ
 - name
@@ -513,7 +513,7 @@ Forbidden
 組織（会社など任意の団体）を更新する（組織管理者のみ可能）
 
 ### リクエスト
-PATCH /v1.0.0/organizations
+PATCH /v1.0.0/organizations/:org_id
 
 ### パラメータ
 - name
