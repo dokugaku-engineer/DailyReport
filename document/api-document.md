@@ -228,7 +228,7 @@ Not Found
 POST /v1.0.0/slack_to_spreadsheets
 
 ### パラメータ
-- user
+- user_name
 - spreadsheet_url
 - sheet_number
 - slack_workspace
@@ -265,7 +265,7 @@ Forbidden
 PATCH /v1.0.0/slack_to_spreadsheets/:id
 
 ### パラメータ
-- user
+- user_name
 - spreadsheet_url
 - sheet_number
 - slack_workspace
@@ -310,7 +310,7 @@ Not Found
 DELETE /v1.0.0/slack_to_spreadsheets/:id
 
 ### パラメータ
-- user
+- user_name
 - spreadsheet_url
 - slack_workspace
 - slack_channel
