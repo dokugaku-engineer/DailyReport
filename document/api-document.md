@@ -310,10 +310,7 @@ Not Found
 DELETE /v1.0.0/slack_to_spreadsheets/:id
 
 ### パラメータ
-- user_name
-- spreadsheet_url
-- slack_workspace
-- slack_channel
+なし
 
 ### 成功時レスポンス
 {
@@ -431,12 +428,7 @@ Forbidden
 DELETE /v1.0.0/org_admin/slack_to_spreadsheets/:org_id
 
 ### パラメータ
-- name
-- spreadsheet_url
-- sheet_number
-- org_id
-- slack_channel
-- slack_workspace
+なし
 
 ### 成功時レスポンス
 {
