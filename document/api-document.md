@@ -16,8 +16,8 @@
 |          | 組織管理者による日報の組織別投稿先更新   | org_admin/slack_to_spreadsheets#update   | PATCH         | /v1.0.0/org_admin/slack_to_spreadsheets/:org_id |
 |          | 組織管理者による日報の組織別投稿先削除   | org_admin/slack_to_spreadsheets#destroy  | DELETE        | /v1.0.0/org_admin/slack_to_spreadsheets/:org_id |
 | 組織      | 組織作成                            | organizations#create                     | POST          | /v1.0.0/organizations                          |
-|          | 組織更新                            | organizations#update                     | PATCH        | /v1.0.0/organizations/org_id                          |
-|          | 組織削除                            | organizations#destroy                    | DELETE        | /v1.0.0/organizations/org_id                   |
+|          | 組織更新                            | organizations#update                     | PATCH        | /v1.0.0/organizations/:org_id                    |
+|          | 組織削除                            | organizations#destroy                    | DELETE        | /v1.0.0/organizations/:org_id                   |
 | ユーザー  | ユーザー新規登録                      | devise_token_auth/registrations#create   | POST          | /v1.0.0/auth                                   |
 |          | ユーザー更新                         | devise_token_auth/registrations#update   | PATCH         | /v1.0.0/auth                                   |
 |          | ユーザー削除                         | devise_token_auth/registrations#destroy  | DELETE        | /v1.0.0/auth                                   |
@@ -40,6 +40,16 @@ POST /v1.0.0/auth/sign_in
 "status": 200,
 "message": "Success"
 }
+
+### レスポンスサンプル
+{
+  "id":"1",
+  "name":"user01",
+  "email":"test@gmail.com",
+  "created_at":"2022-01-03 11:18:36",
+  "updated_at":"2022-01-03 11:18:36"
+}
+
 
 ### 失敗時レスポンス
 Bad Request
@@ -110,7 +120,19 @@ POST /slack_posts
 "result": true,
 "status": 201,
 "message": "Created"
-"body": "something posted is displayed here"
+}
+
+### レスポンスサンプル
+{
+  "ok": true,
+  "slack_workspace": "T02ENTYDT4Y",
+  "slack_channel": "C1H9RESGL",
+  "message": {
+      "text": "Here's a message for you",
+      "username": "user1",
+      "type": "message",
+      "send_time": "2022-01-03 11:18:36"
+  }
 }
 
 ### 失敗時レスポンス
@@ -125,7 +147,7 @@ Unauthorized
 {
 "result": false,
 "status": 401,
-"message": "Unauthorized",
+"message": "Unauthorized"
 }
 
 ## slackで投稿された日報の更新
@@ -154,7 +176,17 @@ PATCH /slack_posts
 "result": true,
 "status": 200,
 "message": "Success"
-"body": "revised post is displayed here"
+}
+
+### レスポンスサンプル
+{
+  "ok": true,
+  "slack_workspace": "T02ENTYDT4Y",
+  "slack_channel": "C1H9RESGL",
+  "message": {
+      "text": "Updated text you carefully authored",
+      "user": "user01"
+  }
 }
 
 ### 失敗時レスポンス
@@ -181,14 +213,8 @@ DELETE /slack_posts
 
 ### パラメータ（代表的なもの）
 【Slack】
-- token
 - team_id
-- authorizations
-- type
-- subtype
 - slack_channel
-- ts
-- deleted_ts
 
 ### 成功時レスポンス
 {
@@ -241,6 +267,18 @@ POST /v1.0.0/slack_to_spreadsheets
 "message": "Created"
 }
 
+### レスポンスサンプル
+{
+  "ok": true,
+  "user_name": "user01",
+  "slack_workspace": "T02ENTYDT4Y",
+  "slack_channel": "C1H9RESGL",
+  "spreadsheet_url": "https://docs.google.com/spreadsheets/d/19sTn9A5WD4YdXa05thkodPZaZcvTGDI32Vxk9Zcxymk/edit#gid=1563685434",
+  "sheet_number": "1563685434",
+  "created_at":"2022-01-03 11:18:36",
+  "updated_at":"2022-01-03 11:18:36"
+}
+
 ### 失敗時レスポンス
 Bad Request
 {
@@ -277,6 +315,18 @@ PATCH /v1.0.0/slack_to_spreadsheets/:id
 "result": true,
 "status": 204,
 "message": "No Content"
+}
+
+### レスポンスサンプル
+{
+  "ok": true,
+  "user_name": "user01",
+  "slack_workspace": "T02ENTYDT4Y",
+  "slack_channel": "C1H9RESGL",
+  "spreadsheet_url": "https://docs.google.com/spreadsheets/d/19sTn9A5WD4YdXa05thkodPZaZcvTGDI32Vxk9Zcxymk/edit#gid=1563685434",
+  "sheet_number": "1563685434",
+  "created_at":"2022-01-03 11:18:36",
+  "updated_at":"2022-01-03 11:18:36"
 }
 
 ### 失敗時レスポンス
@@ -364,6 +414,19 @@ POST /v1.0.0/org_admin/slack_to_spreadsheets
 "message": "Created"
 }
 
+### レスポンスサンプル
+{
+  "ok": true,
+  "org_id": "1",
+  "org_name": "name",
+  "slack_workspace": "T02ENTYDT4Y",
+  "slack_channel": "C1H9RESGL",
+  "spreadsheet_url": "https://docs.google.com/spreadsheets/d/19sTn9A5WD4YdXa05thkodPZaZcvTGDI32Vxk9Zcxymk/edit#gid=1563685434",
+  "sheet_number": "1563685434",
+  "created_at":"2022-01-03 11:18:36",
+  "updated_at":"2022-01-03 11:18:36"
+}
+
 ### 失敗時レスポンス
 Bad Request
 {
@@ -400,6 +463,19 @@ PATCH /v1.0.0/org_admin/slack_to_spreadsheets/:org_id
 "result": true,
 "status": 200,
 "message": "Success"
+}
+
+### レスポンスサンプル
+{
+  "ok": true,
+  "org_id": "1",
+  "org_name": "name",
+  "slack_workspace": "T02ENTYDT4Y",
+  "slack_channel": "C1H9RESGL",
+  "spreadsheet_url": "https://docs.google.com/spreadsheets/d/19sTn9A5WD4YdXa05thkodPZaZcvTGDI32Vxk9Zcxymk/edit#gid=1563685434",
+  "sheet_number": "1563685434",
+  "created_at":"2022-01-03 11:18:36",
+  "updated_at":"2022-01-03 11:18:36"
 }
 
 ### 失敗時レスポンス
@@ -479,6 +555,15 @@ POST /v1.0.0/organizations/:org_id
 }
 ```
 
+### レスポンスサンプル
+{
+  "ok": true,
+  "org_id": "1",
+  "org_name": "name",
+  "created_at":"2022-01-03 11:18:36",
+  "updated_at":"2022-01-03 11:18:36"
+}
+
 ### 失敗時レスポンス
 Bad Request
 
@@ -518,6 +603,16 @@ PATCH /v1.0.0/organizations/:org_id
 "message": "Success"
 }
 ```
+
+### レスポンスサンプル
+{
+  "ok": true,
+  "org_id": "1",
+  "org_name": "name",
+  "created_at":"2022-01-03 11:18:36",
+  "updated_at":"2022-01-03 11:18:36"
+}
+
 
 ### 失敗時レスポンス
 Bad Request
@@ -598,7 +693,7 @@ Not Found
 - 組織管理者になる登録もこちらで行う
 
 ### リクエスト
-POST /v1.0.0/users
+POST /v1.0.0/auth
 
 ### パラメータ
 - name
@@ -615,6 +710,14 @@ POST /v1.0.0/users
 "message": "Created"
 }
 ```
+### レスポンスサンプル
+{
+  "id":"1",
+  "name":"user01",
+  "email":"test@gmail.com",
+  "created_at":"2022-01-03 11:18:36",
+  "updated_at":"2022-01-03 11:18:36"
+}
 
 ### 失敗時レスポンス
 Bad Request
@@ -632,7 +735,7 @@ Bad Request
 - ユーザーの設定を変更する
 
 ### リクエスト
-PATCH /v1.0.0/users
+PATCH /v1.0.0/auth
 
 ### パラメータ
 - name
@@ -648,6 +751,15 @@ PATCH /v1.0.0/users
 "message": "Success"
 }
 ```
+
+### レスポンスサンプル
+{
+  "id":"1",
+  "name":"user01",
+  "email":"test@gmail.com",
+  "created_at":"2022-01-03 11:18:36",
+  "updated_at":"2022-01-03 11:18:36"
+}
 
 ### 失敗時レスポンス
 Bad Request
@@ -666,7 +778,7 @@ Bad Request
 - 各ユーザーが自分自身のみ削除できる
 - 権利者権限の識別にはscopeを使って組織単位・グループ単位の削除を可能にする
 ### リクエスト
-DELETE /v1.0.0/users
+DELETE /v1.0.0/auth
 
 ### 成功時レスポンス
 
