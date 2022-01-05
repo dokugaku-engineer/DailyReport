@@ -4,8 +4,8 @@
 
 | リソース  | 機能                                | コントローラ/メソッド                     |   メソッド        |      URI                                      |
 | :------: | :--------------------------------: | :------------------------------------: | :------------: | :---------------------------------------------:|
-| ログイン   | セッション作成                       | devise_token_auth/sessions#create      | POST           | /v1.0.0/auth/sign_in                           |
-|          | セッション削除                       | devise_token_auth/sessions#destroy      | DELETE         | /v1.0.0/auth/sign_out                          |
+| ログイン   | セッション作成                       | devise_token_auth/sessions#create      | POST           | /v1.0.0/sign_in                                |
+|          | セッション削除                       | devise_token_auth/sessions#destroy      | DELETE         | /v1.0.0/sign_out                               |
 | 日報      | slackで投稿された日報の保存           | slack_posts#create                      | POST           | /v1.0.0/slack_posts                            |
 |          | slackで投稿された日報更新             | slack_posts#update                      | PATCH          | /v1.0.0/slack_posts                            |
 |          | slackで投稿された日報削除             | slack_posts#destroy                     | DELETE         | /v1.0.0/slack_posts                            |
@@ -16,7 +16,7 @@
 |          | 組織管理者による日報の組織別投稿先更新   | org_admin/slack_to_spreadsheets#update   | PATCH         | /v1.0.0/org_admin/slack_to_spreadsheets/org_id |
 |          | 組織管理者による日報の組織別投稿先削除   | org_admin/slack_to_spreadsheets#destroy  | DELETE        | /v1.0.0/org_admin/slack_to_spreadsheets/org_id |
 | 組織      | 組織作成                            | organizations#create                     | POST          | /v1.0.0/organizations                          |
-|          | 組織更新                            | organizations#update                     | PATCH        | /v1.0.0/organizations/org_id                          |
+|          | 組織更新                            | organizations#update                     | PATCH         | /v1.0.0/organizations/org_id                    |
 |          | 組織削除                            | organizations#destroy                    | DELETE        | /v1.0.0/organizations/org_id                   |
 | ユーザー  | ユーザー新規登録                      | devise_token_auth/registrations#create   | POST          | /v1.0.0/auth                                   |
 |          | ユーザー更新                         | devise_token_auth/registrations#update   | PATCH         | /v1.0.0/auth                                   |
@@ -28,7 +28,7 @@
 - devise_token_authで認証し、セッションを構築する
 
 ### リクエスト
-POST /v1.0.0/auth/sign_in
+POST /v1.0.0/sign_in
 
 ### パラメータ（代表的なもの）
 - email
@@ -62,7 +62,7 @@ Unauthorized
 ログインし、セッションを破棄する
 
 ### リクエスト
-DELETE /v1.0.0/auth/sign_out
+DELETE /v1.0.0/sign_out
 
 ### 成功時レスポンス
 {
