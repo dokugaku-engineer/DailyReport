@@ -363,8 +363,8 @@ POST /v1.0.0/org_admin/slack_to_spreadsheets
 ### 成功時レスポンス
 {
 "result": true,
-"status": 200,
-"message": "Success"
+"status": 201,
+"message": "Created"
 }
 
 ### 失敗時レスポンス
