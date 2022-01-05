@@ -18,9 +18,9 @@
 | 組織      | 組織作成                            | organizations#create                     | POST          | /v1.0.0/organizations                          |
 |          | 組織更新                            | organizations#update                     | PATCH         | /v1.0.0/organizations/:org_id                    |
 |          | 組織削除                            | organizations#destroy                    | DELETE        | /v1.0.0/organizations/:org_id                   |
-| ユーザー  | ユーザー新規登録                      | devise_token_auth/registrations#create   | POST          | /v1.0.0/auth                                   |
-|          | ユーザー更新                         | devise_token_auth/registrations#update   | PATCH         | /v1.0.0/auth                                   |
-|          | ユーザー削除                         | devise_token_auth/registrations#destroy  | DELETE        | /v1.0.0/auth                                   |
+| ユーザー  | ユーザー新規登録                      | devise_token_auth/registrations#create   | POST          | /v1.0.0/users                                  |
+|          | ユーザー更新                         | devise_token_auth/registrations#update   | PATCH         | /v1.0.0/users                                   |
+|          | ユーザー削除                         | devise_token_auth/registrations#destroy  | DELETE        | /v1.0.0/users                                   |
 
 ## ログイン
 
@@ -177,7 +177,7 @@ Unauthorized
 - slackで投稿された日報を、どのユーザーのどの投稿かを検証してからデータベースやSpreadSheetなどから削除する
 - どの組織から、またはどのチャンネルから投稿されたのものか判定するためにパラメータにteam_id、slack_channelの値を使用して判定する
 ### リクエスト
-DELTE /slack_posts
+DELETE /slack_posts
 
 ### パラメータ（代表的なもの）
 【Slack】
@@ -193,8 +193,8 @@ DELTE /slack_posts
 ### 成功時レスポンス
 {
 "result": true,
-"status": 200,
-"message": "Success"
+"status": 204,
+"message": "No Content"
 }
 
 ### 失敗時レスポンス
@@ -606,7 +606,7 @@ Not Found
 - 組織管理者になる登録もこちらで行う
 
 ### リクエスト
-POST /v1.0.0/auth
+POST /v1.0.0/users
 
 ### パラメータ
 - name
@@ -640,7 +640,7 @@ Bad Request
 - ユーザーの設定を変更する
 
 ### リクエスト
-PATCH /v1.0.0/auth
+PATCH /v1.0.0/users
 
 ### パラメータ
 - name
@@ -674,7 +674,7 @@ Bad Request
 - 各ユーザーが自分自身のみ削除できる
 - 権利者権限の識別にはscopeを使って組織単位・グループ単位の削除を可能にする
 ### リクエスト
-DELETE /v1.0.0/auth
+DELETE /v1.0.0/users
 
 ### 成功時レスポンス
 
