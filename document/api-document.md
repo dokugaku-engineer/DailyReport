@@ -9,12 +9,12 @@
 | 日報      | slackで投稿された日報の保存           | slack_posts#create                      | POST           | /v1.0.0/slack_posts                            |
 |          | slackで投稿された日報更新             | slack_posts#update                      | PATCH          | /v1.0.0/slack_posts                            |
 |          | slackで投稿された日報削除             | slack_posts#destroy                     | DELETE         | /v1.0.0/slack_posts                            |
-| 投稿先    | ユーザーによる日報の個別投稿先作成      | slack_to_spreadsheets#create             | POST           | /v1.0.0/slack_to_spreadsheets                 |
-|          | ユーザーによる日報の個別投稿先更新      | slack_to_spreadsheets#update            | PATCH           | /v1.0.0/slack_to_spreadsheets/:id              |
-|          | ユーザーによる日報の個別投稿先削除      | slack_to_spreadsheets#destroy            | DELETE        | /v1.0.0/slack_to_spreadsheets/:id               |
-|          | 組織管理者による日報の組織別投稿先作成   | org_admin/slack_to_spreadsheets#create   | POST          | /v1.0.0/org_admin/:org_id/slack_to_spreadsheets |
-|          | 組織管理者による日報の組織別投稿先更新   | org_admin/slack_to_spreadsheets#update   | PATCH         | /v1.0.0/org_admin/slack_to_spreadsheets/:org_id |
-|          | 組織管理者による日報の組織別投稿先削除   | org_admin/slack_to_spreadsheets#destroy  | DELETE        | /v1.0.0/org_admin/slack_to_spreadsheets/:org_id |
+| 投稿先    | ユーザーによる日報の個別投稿先作成      | slack_to_spreadsheets#create             | POST           | /v1.0.0/slack_to_spreadsheets                  |
+|          | ユーザーによる日報の個別投稿先更新      | slack_to_spreadsheets#update            | PATCH           | /v1.0.0/slack_to_spreadsheets                  |
+|          | ユーザーによる日報の個別投稿先削除      | slack_to_spreadsheets#destroy            | DELETE        | /v1.0.0/slack_to_spreadsheets                   |
+|          | 組織管理者による日報の組織別投稿先作成   | org_admin/slack_to_spreadsheets#create   | POST          | /v1.0.0/org_admin/slack_to_spreadsheets         |
+|          | 組織管理者による日報の組織別投稿先更新   | org_admin/slack_to_spreadsheets#update   | PATCH         | /v1.0.0/org_admin/slack_to_spreadsheets         |
+|          | 組織管理者による日報の組織別投稿先削除   | org_admin/slack_to_spreadsheets#destroy  | DELETE        | /v1.0.0/org_admin/slack_to_spreadsheets         |
 | 組織      | 組織作成                            | organizations#create                     | POST          | /v1.0.0/organizations                          |
 |          | 組織更新                            | organizations#update                     | PATCH         | /v1.0.0/organizations/:org_id                   |
 |          | 組織削除                            | organizations#destroy                    | DELETE        | /v1.0.0/organizations/:org_id                   |
@@ -300,14 +300,11 @@ Forbidden
 指定したスプレッドシートの投稿先を更新する
 
 ### リクエスト
-PATCH /v1.0.0/slack_to_spreadsheets/:id
+PATCH /v1.0.0/slack_to_spreadsheets
 
 ### パラメータ
-- user_name
-- spreadsheet_url
-- sheet_number
-- slack_workspace
-- slack_channel
+- new_spreadsheet_url
+- old_spreadsheet_url
 
 
 ### 成功時レスポンス
@@ -351,16 +348,16 @@ Not Found
 "message": "Not Found",
 }
 
-## ユーザーによる日報の個別投稿先指定削除
+## ユーザーによる日報の個別投稿先削除
 
 ### 機能概要
 指定したスプレッドシートの投稿先を削除する
 
 ### リクエスト
-DELETE /v1.0.0/slack_to_spreadsheets/:id
+DELETE /v1.0.0/slack_to_spreadsheets/
 
 ### パラメータ
-なし
+- spreadsheet_url
 
 ### 成功時レスポンス
 {
@@ -397,13 +394,12 @@ Not Found
 組織メンバーの日報の投稿先をスプレッドシート単位、シート単位で指定する
 
 ### リクエスト
-POST /v1.0.0/org_admin/slack_to_spreadsheets
+POST /v1.0.0/slack_to_spreadsheets
 
 ### パラメータ
 - name
 - spreadsheet_url
 - sheet_number
-- org_id
 - slack_workspace
 - slack_channel
 
@@ -448,13 +444,12 @@ Forbidden
 - 組織メンバーの日報の投稿先をスプレッドシート単位、シート単位で更新する
 - グループ単位のスプレッドシートの更新はslack_channelをパラメータに指定する
 ### リクエスト
-PATCH /v1.0.0/org_admin/slack_to_spreadsheets/:org_id
+PATCH /v1.0.0/org_admin/slack_to_spreadsheets
 
 ### パラメータ
 - name
 - spreadsheet_url
 - sheet_number
-- org_id
 - slack_channel
 - slack_workspace
 
@@ -501,10 +496,10 @@ Forbidden
 - グループ単位のスプレッドシートの削除はslack_channelをパラメータに指定する
 
 ### リクエスト
-DELETE /v1.0.0/org_admin/slack_to_spreadsheets/:org_id
+DELETE /v1.0.0/org_admin/slack_to_spreadsheets
 
 ### パラメータ
-なし
+- name
 
 ### 成功時レスポンス
 {
@@ -541,7 +536,7 @@ Not Found
 組織（会社など任意の団体）を作成する（組織管理者のみ可能）
 
 ### リクエスト
-POST /v1.0.0/organizations/:org_id
+POST /v1.0.0/organizations
 
 ### パラメータ
 - name
@@ -590,7 +585,7 @@ Forbidden
 組織（会社など任意の団体）を更新する（組織管理者のみ可能）
 
 ### リクエスト
-PATCH /v1.0.0/organizations/:org_id
+PATCH /v1.0.0/organizations
 
 ### パラメータ
 - name
