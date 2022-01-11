@@ -9,9 +9,9 @@ class SlackPostsController < ApplicationController
         "status": 201,
         "message": "Created",
         "data": {
-          "text": "#{post.text}",
-          "username": "#{registered_user.name}", 
-          "created_at": "#{post.created_at}"
+          "text": post.text.to_s,
+          "username": registered_user.name.to_s,
+          "created_at": post.created_at.to_s
         }
       }
     else
@@ -42,10 +42,10 @@ class SlackPostsController < ApplicationController
       http.request(request)
     end
 
-    unless response.nil?
-      result = JSON.parse(response.body)
-      result["user"]["real_name"]
-    end
+    return if response.nil?
+
+    result = JSON.parse(response.body)
+    result["user"]["real_name"]
   end
 
   def registered_user
@@ -58,13 +58,13 @@ class SlackPostsController < ApplicationController
   end
 
   def require_user_is_registered
-    unless registered_user?
-      render status: 401, json: {
-        "result": false,
-        "status": 401,
-        "message": "Unauthorized"
-      }
-    end
+    return if registered_user?
+
+    render status: 401, json: {
+      "result": false,
+      "status": 401,
+      "message": "Unauthorized"
+    }
   end
 
   def daily_report?
@@ -72,13 +72,13 @@ class SlackPostsController < ApplicationController
   end
 
   def require_post_is_daily_report
-    unless daily_report?
-      render status: 401, json: {
-        "result": false,
-        "status": 401,
-        "message": "Unauthorized"
-      }
-    end
+    return if daily_report?
+
+    render status: 401, json: {
+      "result": false,
+      "status": 401,
+      "message": "Unauthorized"
+    }
   end
 
   def verify_signature
