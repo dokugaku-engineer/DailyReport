@@ -3,6 +3,7 @@
 ## (sample)アプリ名 rails-dailyreport
 
 ### 1.herokuアカウントの作成
+
 ### 2.HerokuCLIの導入
 https://devcenter.heroku.com/ja/articles/heroku-cli
 
@@ -15,6 +16,7 @@ $ heroku login
 $ heroku container:login
 ```
 ### 4.heroku上でアプリ作成
+
 ```bash
 $ heroku create rails-dailyreport(任意のアプリ名)
 ```
@@ -28,6 +30,7 @@ mysql8.0はjawsDBMySQLを選択、下記コマンドを実行
 ```bash
 $ heroku addons:create jawsdb:kitefin -a rails-dailyreport --version=8.0
 ```
+
 ダッシュボード画面でattachされたか確認
 
 https://dashboard.heroku.com/apps/アプリ名/resources
@@ -35,6 +38,7 @@ https://dashboard.heroku.com/apps/アプリ名/resources
 ### 6.DB接続情報の設定
 こちらからDBを選択すると、DBの接続情報が判明するので、herokuの環境変数に設定します\
 https://dashboard.heroku.com/apps/アプリ名
+
 ```bash
 # heroku上に環境変数を設定する
 $ heroku config:add APP_DATABASE="database" -a rails-docker-dailyreport
@@ -47,19 +51,41 @@ $ heroku config -a rails-dailyreport
 ```
 ### 7.環境変数にmaster.keyの値を設定
 railsアプリの/confg/master.keyの値を環境変数に設定
+
 ```bash
 $ heroku config:add RAILS_MASTER_KEY="master.keyの値" -a rails-dailyreport
 ```
 ### 8.環境変数にRAILS_ENVの値を設定
 以下のコマンドを実行して環境変数を設定します。
+
 ```bash
 $ heroku config:add RAILS_ENV="production" -a rails-dailyreport
 ```
+
 ### 9.dockerイメージのherokuへのpushとrelease
 
 ```bash
 # herokuへpush
 $ heroku container:push web -a rails-dailyreport
+# herokuへrelease
+$ heroku container:release web -a rails-dailyreport
+```
+
+注意：M1チップ搭載Macのユーザーは以下の手順でherokuへのpushとreleaseを行ってください。
+
+1. Herokuのダッシュボードで「Settings」のページへ行き、「Add Buildpack」をクリックしてRubyのBuildpack追加する。
+
+2. Railsのconfig/environment/production.rbに```config.hosts << "rails-dailyreport.herokuapp.com"```と記入する。
+
+3. Dockerファイルのあるディレクトリで以下を順に実行する。
+
+```bash
+# x86アーキテクチャ向けDockerイメージをビルドする
+$ docker buildx build . --platform linux/amd64 -t rails-dailyreport:latest
+# リポジトリ内のイメージにタグ付けする
+$ docker tag rails-dailyreport registry.heroku.com/rails-dailyreport/web
+# herokuへpush
+$ docker push registry.heroku.com/rails-dailyreport/web
 # herokuへrelease
 $ heroku container:release web -a rails-dailyreport
 ```
