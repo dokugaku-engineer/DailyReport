@@ -19,11 +19,8 @@ RUN apt-get update && \
     vim && \
     docker-php-ext-install pdo_mysql bcmath
 
-
 #Laravelインストーラーのインストール
 RUN composer global require "laravel/installer"
 
 #ワークディレクトリを移動
-WORKDIR /var/www
-
-
+WORKDIR /var/www/dailyReport

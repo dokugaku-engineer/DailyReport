@@ -23,4 +23,3 @@
 Copyright (c) Youble, Inc. All rights reserved.
 
 Licensed under the [MIT](LICENSE.txt) license.
-
