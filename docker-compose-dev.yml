@@ -1,0 +1,43 @@
+version: "3"
+
+volumes:
+  mysql-data:
+
+services:
+  web:
+    container_name: web
+    build:
+      context: ./docker/nginx
+    ports:
+      - "${WEB_HOST_PORT:-8080}:80"
+    volumes:
+      - ./src:/var/www/dailyReport
+    depends_on:
+      - app
+
+  app:
+    container_name: app
+    build: 
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - ./src:/var/www/dailyReport
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0.23
+    container_name: db
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports: 
+      - "${DB_HOST_PORT:-13306}:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/db/sql:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - TZ=${TIME_ZONE}

@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  web:
+    container_name: web
+    image: "${WEB_IMAGE}"
+    ports:
+      - "${WEB_HOST_PORT:-80}:80"
+    volumes:
+      - ./src:/var/www/dailyReport
+    depends_on:
+      - app
+
+  app:
+    container_name: app
+    image: "${APP_IMAGE}"
+    volumes:
+      - ./src:/var/www/dailyReport
+    depends_on:
+      - db
