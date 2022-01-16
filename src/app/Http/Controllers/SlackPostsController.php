@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Spreadsheet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class SlackPostsController extends Controller
 {
@@ -21,7 +22,8 @@ class SlackPostsController extends Controller
         }
 
         //SlackEventAPIから送られて来たメッセージJSONの内、使うものを取り出し
-
+        //とりあえず実際にどんな形でデータが送られて来るかチェック
+        Log::debug($request);
         //SlackEventAPIから送られてくるメッセージJSONのバリデーションチェック
 
         //SlackEventAPIから送られてくるメッセージをDBへ保存
