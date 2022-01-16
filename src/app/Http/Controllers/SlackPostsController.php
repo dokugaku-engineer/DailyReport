@@ -22,10 +22,16 @@ class SlackPostsController extends Controller
         }
 
         //SlackEventAPIから送られて来たメッセージJSONの内、使うものを取り出し
-        //とりあえず実際にどんな形でデータが送られて来るかチェック
-        Log::debug($request);
-        //SlackEventAPIから送られてくるメッセージJSONのバリデーションチェック
+        //dd($request);
+        $slack_team_id = $request->input('team_id');
+        $slack_channel_id = $request->input('event.channel');
+        $slack_user_id = $request->input('event.user');
+        $message = $request->input('event.text');
 
+        //SlackEventAPIから送られてくるメッセージJSONのバリデーションチェック
+        if(!$slack_channel_id || !$slack_team_id || !$message || !$slack_user_id){
+            //エラー
+        }
         //SlackEventAPIから送られてくるメッセージをDBへ保存
 
         //メッセージをSpreadsheetに連携
@@ -33,9 +39,10 @@ class SlackPostsController extends Controller
 
         // スプレッドシートに格納するテストデータです
         $insert_data = [
-            'hoge' => 'test text',
-            'huga' => 12345,
-            'foo'  => true
+            'slack_team_id' => $slack_team_id,
+            'slack_channel_id' => $slack_channel_id,
+            'slack_user_id'  => $slack_user_id,
+            'message'  => $message
         ];
 
         $spread_sheet->insert_spread_sheet($insert_data);

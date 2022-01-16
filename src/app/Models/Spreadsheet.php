@@ -26,9 +26,10 @@ class Spreadsheet extends Model
         $row = count($response->getValues()) + 1;
         // データを整形（この順序でシートに格納される）
         $contact = [
-            $insert_data['hoge'],
-            $insert_data['huga'],
-            $insert_data['foo'],
+            $insert_data['slack_team_id'],
+            $insert_data['slack_channel_id'],
+            $insert_data['slack_user_id'],
+            $insert_data['message']
         ];
         $values = new \Google_Service_Sheets_ValueRange();
         $values->setValues([
