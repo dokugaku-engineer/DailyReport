@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Spreadsheet;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Models\SlackMessage;
+use App\Services\PostSpreadsheet;
+//use App\Models\Spreadsheet;
 
 class SlackPostsController extends Controller
 {
@@ -22,7 +25,6 @@ class SlackPostsController extends Controller
         }
 
         //SlackEventAPIから送られて来たメッセージJSONの内、使うものを取り出し
-        //dd($request);
         $slack_team_id = $request->input('team_id');
         $slack_channel_id = $request->input('event.channel');
         $slack_user_id = $request->input('event.user');
@@ -30,12 +32,24 @@ class SlackPostsController extends Controller
 
         //SlackEventAPIから送られてくるメッセージJSONのバリデーションチェック
         if(!$slack_channel_id || !$slack_team_id || !$message || !$slack_user_id){
-            //エラー
+           // abort(400);
         }
+
         //SlackEventAPIから送られてくるメッセージをDBへ保存
+        //SlackMessageモデルのインスタンスを生成
+        $slack_message_model = new SlackMessage;
+        //DBへデータを保存
+        $slack_message_model->slack_team_id = $slack_team_id;
+        $slack_message_model->slack_channel_id = $slack_channel_id;
+        $slack_message_model->slack_user_id = $slack_user_id;
+        $slack_message_model->message = $message;
+        
+        $slack_message_model->save();
+
+
 
         //メッセージをSpreadsheetに連携
-        $spread_sheet = new Spreadsheet();
+        $spread_sheet = new PostSpreadsheet();
 
         // スプレッドシートに格納するテストデータです
         $insert_data = [
@@ -45,7 +59,7 @@ class SlackPostsController extends Controller
             'message'  => $message
         ];
 
-        $spread_sheet->insert_spread_sheet($insert_data);
+        $spread_sheet->insertSpreadsheet($insert_data);
 
         return response('格納に成功！！', 200);       
 

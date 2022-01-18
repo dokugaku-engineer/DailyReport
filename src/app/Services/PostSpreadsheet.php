@@ -1,21 +1,19 @@
 <?php
-/*
-namespace App\Models ;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+namespace App\Services;
+
 use Google\Client;
 use Google\Service;
 
-class Spreadsheet extends Model
+class PostSpreadsheet
 {
-    use HasFactory;
+
 
     // スプレッドシート挿入用Function
-    static function insert_spread_sheet($insert_data)
+    static function insertSpreadsheet($insert_data)
     {
         // スプレッドシートを操作するGoogleClientインスタンスの生成（後述のファンクション）
-        $sheets = SpreadSheet::instance();
+        $sheets = PostSpreadsheet::makeGoogleServiceSheetsInstance();
         // データを格納したい SpreadSheet のURLが
         // https://docs.google.com/spreadsheets/d/×××××××××××××××××××/edit#gid=0
         // である場合、××××××××××××××××××× の部分を以下に記入する
@@ -46,7 +44,7 @@ class Spreadsheet extends Model
     }
 
     // スプレッドシート操作用のインスタンスを生成するFunction
-    public static function instance() {
+    public static function makeGoogleServiceSheetsInstance() {
         // storage/app/json フォルダに GCP からダウンロードした JSON ファイルを設置する
         $credentials_path = storage_path('app/json/credentials.json');
         $client = new \Google_Client();

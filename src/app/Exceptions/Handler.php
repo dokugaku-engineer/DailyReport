@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+//use \Symfony\Component\HttpFoundation\Response as ResponseStatus;
 
 class Handler extends ExceptionHandler
 {
@@ -38,4 +39,23 @@ class Handler extends ExceptionHandler
             //
         });
     }
+/*
+    private function apiErrorResponse($exception)
+    {
+        if ($this->isHttpException($exception)) {
+            $statusCode = $exception->getStatusCode();
+
+            switch ($statusCode) {
+                case 400:
+                    return response()->json_content(ResponseStatus::HTTP_BAD_REQUEST, 'Bad Request');
+                case 401:
+                    return response()->json_content(ResponseStatus::HTTP_UNAUTHORIZED, 'Unauthorized');
+                case 403:
+                    return response()->json_content(ResponseStatus::HTTP_FORBIDDEN, 'Forbidden');
+                case 404:
+                    return response()->json_content(ResponseStatus::HTTP_NOT_FOUND, 'Not Found');
+            }
+        }
+    }
+*/
 }
