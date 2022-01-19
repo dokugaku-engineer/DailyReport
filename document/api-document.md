@@ -18,7 +18,7 @@
 | 組織      | 組織作成                            | organizations#create                     | POST          | /v1.0.0/organizations                          |
 |          | 組織更新                            | organizations#update                     | PATCH         | /v1.0.0/organizations/:org_id                   |
 |          | 組織削除                            | organizations#destroy                    | DELETE        | /v1.0.0/organizations/:org_id                   |
-|          | 組織管理者による組織情報取得            | organizations#index                      | GET           | /v1.0.0/organizations/info                      |
+|          | 組織管理者による組織情報取得            | organizations#index                      | GET           | /v1.0.0/organizations                          |
 | ユーザー  | ユーザー新規登録                      | devise_token_auth/registrations#create   | POST          | /v1.0.0/users                                   |
 |          | ユーザー更新                         | devise_token_auth/registrations#update   | PATCH         | /v1.0.0/users                                   |
 |          | ユーザー削除                         | devise_token_auth/registrations#destroy  | DELETE        | /v1.0.0/users                                   |
@@ -770,7 +770,7 @@ Not Found
 - 組織管理者が組織情報を取得することができる
 
 ### リクエスト
-GET /v1.0.0/organization/info
+GET /v1.0.0/organizations
 
 ### パラメータ
 - org_name
