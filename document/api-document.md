@@ -224,6 +224,7 @@ Unauthorized
 ### 機能概要
 - slackで投稿された日報を、どのユーザーのどの投稿かを検証してからデータベースやSpreadSheetなどから削除する
 - どの組織から、またはどのチャンネルから投稿されたのものか判定するためにパラメータにteam_id、slack_channelの値を使用して判定する
+
 ### リクエスト
 DELETE /slack_posts
 
@@ -767,6 +768,7 @@ Not Found
 
 ### 機能概要
 - 組織管理者が組織情報を取得することができる
+
 ### リクエスト
 GET /v1.0.0/organization/info
 
@@ -953,6 +955,7 @@ Not Found
 ### 機能概要
 - ログイン中のユーザーが自分自身(current_user)の登録情報を取得できる
 - callbackでログイン中のcurrent_userのみ情報取得可能になる
+
 ### リクエスト
 GET /v1.0.0/users/me
 
