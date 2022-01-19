@@ -13,8 +13,8 @@
 |          | ユーザーによる日報の個別投稿先更新      | slack_to_spreadsheets#update             | PATCH          | /v1.0.0/slack_to_spreadsheets/:id              |
 |          | ユーザーによる日報の個別投稿先削除      | slack_to_spreadsheets#destroy            | DELETE        | /v1.0.0/slack_to_spreadsheets/:id               |
 |          | 組織管理者による日報の組織別投稿先作成   | org_admin/slack_to_spreadsheets#create   | POST          | /v1.0.0/org_admin/slack_to_spreadsheets         |
-|          | 組織管理者による日報の組織別投稿先更新   | org_admin/slack_to_spreadsheets#update   | PATCH         | /v1.0.0/org_admin/slack_to_spreadsheets/:id     |
-|          | 組織管理者による日報の組織別投稿先削除   | org_admin/slack_to_spreadsheets#destroy  | DELETE        | /v1.0.0/org_admin/slack_to_spreadsheets/:id     |
+|          | 組織管理者による日報の組織別投稿先更新   | org_admin/slack_to_spreadsheets#update   | PATCH         | /v1.0.0/org_admin/slack_to_spreadsheets         |
+|          | 組織管理者による日報の組織別投稿先削除   | org_admin/slack_to_spreadsheets#destroy  | DELETE        | /v1.0.0/org_admin/slack_to_spreadsheets        |
 | 組織      | 組織作成                            | organizations#create                     | POST          | /v1.0.0/organizations                          |
 |          | 組織更新                            | organizations#update                     | PATCH         | /v1.0.0/organizations/:org_id                   |
 |          | 組織削除                            | organizations#destroy                    | DELETE        | /v1.0.0/organizations/:org_id                   |
@@ -447,7 +447,7 @@ Not Found
 }
 ```
 
-## 組織管理者によるスプレッドシートへの日報の投稿先作成
+## 組織管理者による組織別投稿先作成
 
 ### 機能概要
 - 組織メンバーの日報の投稿先をスプレッドシート単位、シート単位で指定する
@@ -504,7 +504,7 @@ Forbidden
 }
 ```
 
-## 組織管理者によるスプレッドシートへの日報の投稿先更新
+## 組織管理者による組織別投稿先更新
 
 ### 機能概要
 - 組織メンバーの日報の投稿先をスプレッドシート単位、シート単位で更新する
@@ -515,7 +515,6 @@ Forbidden
 PATCH /v1.0.0/org_admin/slack_to_spreadsheets
 
 ### パラメータ
-- id
 - spreadsheet_url
 - sheet_number
 - slack_channel
@@ -570,7 +569,7 @@ Forbidden
 - ログインしてセッションを構築している組織管理者しか使えない
 
 ### リクエスト
-DELETE /v1.0.0/org_admin/slack_to_spreadsheets
+DELETE /v1.0.0/org_admin/slack_to_spreadsheets/
 
 ### パラメータ
 - id
