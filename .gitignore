@@ -30,3 +30,5 @@ src/config/master.key
 !.vscode/settings.json
 development.env
 /src/db/mysql_data
+.env
+.rubocop.yml
