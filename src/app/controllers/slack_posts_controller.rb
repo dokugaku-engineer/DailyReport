@@ -1,5 +1,5 @@
 class SlackPostsController < ApplicationController
-  before_action :require_user_is_registered, :require_post_is_daily_report, :verify_signature, only: %i[create]
+  before_action :initialize_slack_event_api, :require_user_is_registered, :require_post_is_daily_report, :verify_signature, only: %i[create]
 
   def create
     post = registered_user.slack_posts.build(post_params)
@@ -29,28 +29,9 @@ class SlackPostsController < ApplicationController
     params.require(:event).permit(:text)
   end
 
-  def fetch_username_from_slack
-    user_id = params["event"]["user"]
-    parameters = URI.encode_www_form({ user: user_id })
-
-    uri = URI.parse("#{ENV["BASE_URL"]}/users.info?#{parameters}")
-
-    request = Net::HTTP::Get.new(uri)
-    request[:Authorization] = "Bearer #{ENV["USER_TOKEN"]}"
-
-    response = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
-      http.request(request)
-    end
-
-    return if response.nil?
-
-    result = JSON.parse(response.body)
-    result["user"]["real_name"]
-  end
-
   def registered_user
-    username = fetch_username_from_slack
-    User.find_by(name: username)
+    slack_user_id = params["event"]["user"]
+    @registered_user ||= User.find_by(slack_user_id: slack_user_id)
   end
 
   def registered_user?
@@ -68,16 +49,16 @@ class SlackPostsController < ApplicationController
   end
 
   def daily_report?
-    params["event"]["text"].match?("日報")
+    params["event"]["text"].match?(/.+日報.+\n|.+朝の日報.+\n|.+夜の日報.+\n/)
   end
 
   def require_post_is_daily_report
     return if daily_report?
 
-    render status: 401, json: {
+    render status: 406, json: {
       "result": false,
-      "status": 401,
-      "message": "Unauthorized"
+      "status": 406,
+      "message": "Not Acceptable"
     }
   end
 
@@ -101,5 +82,16 @@ class SlackPostsController < ApplicationController
       "status": 403,
       "message": "Forbidden"
     }
+  end
+
+  def initialize_slack_event_api
+    if request_data = JSON.parse(request.body.read)
+      case request_data["type"]
+      when "url_verification"
+        render json: request_data
+      end
+    else
+      return
+    end
   end
 end
