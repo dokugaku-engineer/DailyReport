@@ -8,7 +8,6 @@ use Google\Service;
 class PostSpreadsheet
 {
 
-
     // スプレッドシート挿入用Function
     static function insertSpreadsheet($insert_data)
     {

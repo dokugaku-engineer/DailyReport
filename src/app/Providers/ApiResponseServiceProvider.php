@@ -22,16 +22,16 @@ class ApiResponseServiceProvider extends ServiceProvider
      *
      * @return void
      */
-/*
-     public function boot()
+
+    public function boot()
     {
         Response::macro('json_content', function ($status, $message) {
             return response()->json([
                 'code' => $status,
-                'message' => $message,
-            ], $status);
+                'message' => $message
+            ]);
         });
     }
-*/
+
 
 }

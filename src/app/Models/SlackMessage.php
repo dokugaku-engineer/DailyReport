@@ -11,5 +11,4 @@ use App\Models\SlacUser;
 class SlackMessage extends Model
 {
     use HasFactory;
-
 }

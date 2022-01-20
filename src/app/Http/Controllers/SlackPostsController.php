@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\SlackMessage;
 use App\Services\PostSpreadsheet;
+use Exception;
+
 //use App\Models\Spreadsheet;
 
 class SlackPostsController extends Controller
@@ -29,11 +31,18 @@ class SlackPostsController extends Controller
         $slack_channel_id = $request->input('event.channel');
         $slack_user_id = $request->input('event.user');
         $message = $request->input('event.text');
-
+       
+        //dd(!$slack_team_id);
         //SlackEventAPIから送られてくるメッセージJSONのバリデーションチェック
         if(!$slack_channel_id || !$slack_team_id || !$message || !$slack_user_id){
-           // abort(400);
-        }
+            throw new Exception('',400);
+            //return response()->json_content('400','Bad_REQUEST');
+        }     
+
+        //日報として格納する投稿かチェック（キーワードがあるか）
+        //key_wordの値を取得して正規表現trueかどうか
+
+
 
         //SlackEventAPIから送られてくるメッセージをDBへ保存
         //SlackMessageモデルのインスタンスを生成
