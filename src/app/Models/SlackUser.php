@@ -14,11 +14,20 @@ class SlackUser extends Model
         'slack_teams_id'
     ];
 
+    /**
+     * Slack_teamsテーブルとの関連付けを行う
+     * @return SlackTeam SlackTeamモデルを返す
+     */
     public function slackTeam()
     {
         return $this->belongsTo(SlackTeam::class,'slack_teams_id');
     }
 
+    /**
+     * slack_userテーブルにユーザーIDが登録されているか確認する
+     * @param array $user_ids Slackのuser_idの配列
+     * @return boolean 
+     */   
     public function getUserIdExistence($user_ids)
     {
         //DBへ存在チェック処理を行う
