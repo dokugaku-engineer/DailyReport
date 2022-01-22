@@ -295,8 +295,8 @@ AWS上でサーバを稼働させるためには専用のプライベートネ�
 【基本的な詳細】
 |          項目          |        値        |
 | :--------------------: | :--------------: |
-| セキュリティグループ名 | dr-prod-ecs-sg01 |
-|          説明          |    allow-ecs     |
+| セキュリティグループ名 | dr-prod-ec2-sg01 |
+|          説明          |    for ec2     |
 |          VPC           |  dr-prod-vpc01   |
 
 **セキュリティグループ3**
@@ -345,20 +345,20 @@ AWS上でサーバを稼働させるためには専用のプライベートネ�
 | :--------: | :--------------: |
 |   タイプ   |       http       |
 | プロトコル |       TCP        |
-|   送信先   | dr-prod-ecs-sg01 |
-|    説明    |   http-to-ecs    |
+|   送信先   | dr-prod-ec2-sg01 |
+|    説明    |   http-to-ec2    |
 
 **ルール2**
 |    項目    |        値        |
 | :--------: | :--------------: |
 |   タイプ   |      https       |
 | プロトコル |       TCP        |
-|   送信先   | dr-prod-ecs-sg01 |
-|    説明    |   http-to-ecs    |
+|   送信先   | dr-prod-ec2-sg01 |
+|    説明    |   http-to-ec2    |
 
 ![WS000009](https://user-images.githubusercontent.com/89679815/146729293-211bac26-c4f1-48d9-895e-4e0c3dd24945.JPG)  
 
-**セキュリティグループ2 (dr-prod-ecs-sg01)**
+**セキュリティグループ2 (dr-prod-ec2-sg01)**
 
 【インバウンドルール】
 
@@ -377,10 +377,10 @@ AWS上でサーバを稼働させるためには専用のプライベートネ�
 **ルール2**    
 |    項目    |        値        |
 | :--------: | :--------------: |
-|   タイプ   |      https       |
+|   タイプ   |       SSH        |
 | プロトコル |       TCP        |
-|   ソース   | dr-prod-alb-sg01 |
-|    説明    |  https-from-alb  |
+|   ソース   |     マイPC        |
+|    説明    |  allow-from-myPC  |
 
 ![WS000015](https://user-images.githubusercontent.com/89679815/146729517-e0a405d4-e76a-4908-9c6e-fc0e295659e5.JPG)     
 
@@ -403,16 +403,24 @@ AWS上でサーバを稼働させるためには専用のプライベートネ�
 | :--------: | :--------------: |
 |   タイプ   |       http       |
 | プロトコル |       TCP        |
-|   送信先   | dr-prod-alb-sg01 |
-|    説明    |   http-to-alb    |
+|   送信先   |    0.0.0.0/0     |
+|    説明    |   http-outbound  |
 
 **ルール3**  
 |    項目    |        値        |
 | :--------: | :--------------: |
 |   タイプ   |      https       |
 | プロトコル |       TCP        |
-|   送信先   | dr-prod-alb-sg01 |
-|    説明    |   http-to-alb    |
+|   送信先   |   0.0.0.0/0      |
+|    説明    |   http-outbound  |  
+
+**ルール4**  
+|    項目    |        値        |
+| :--------: | :--------------:|
+|   タイプ   |      SSH         |
+| プロトコル |       TCP        |
+|   送信先   |    0.0.0.0/0     |
+|    説明    |   to-git-hub     |
 
 ![WS000030](https://user-images.githubusercontent.com/89679815/146729660-217f0552-e395-4a8b-aeae-2d3a498dabdf.JPG)  
 
@@ -425,10 +433,18 @@ AWS上でサーバを稼働させるためには専用のプライベートネ�
 **ルール1**    
 |        項目        |        値        |
 | :----------------: | :--------------: |
-| タイプMySQL/Aurora |
-|     プロトコル     |       TCP        |
-|       ソース       | dr-prod-ecs-sg01 |
-|        説明        |     from-ecs     |
+| タイプ             |    MySQL/Aurora  |
+|     プロトコル     |       TCP         |
+|       ソース       | dr-prod-ec2-sg01 |
+|        説明        |     from-ec2     |  
+
+**ルール2**    
+|    項目    |        値        |
+| :--------: | :--------------: |
+|   タイプ   |       SSH        |
+| プロトコル |       TCP        |
+|   ソース   |     マイPC        |
+|    説明    |  allow-from-myPC  |
 
 ![WS000023](https://user-images.githubusercontent.com/89679815/146729804-f9ce4a7c-d202-443c-93b5-a0a9de6349f6.JPG)  
 
