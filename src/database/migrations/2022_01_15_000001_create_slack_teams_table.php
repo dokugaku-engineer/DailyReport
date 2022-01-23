@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSlackUsersTable extends Migration
+class CreateSlackTeamsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateSlackUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('slack_users', function (Blueprint $table) {
+        Schema::create('slack_teams', function (Blueprint $table) {
             $table->id();
-            $table->string('slack_user_id');
-            $table->integer('slack_teams_id');
+            $table->string('slack_team_id')->unique();
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
         });
@@ -29,6 +28,6 @@ class CreateSlackUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('slack_users');
+        Schema::dropIfExists('slack_teams');
     }
 }

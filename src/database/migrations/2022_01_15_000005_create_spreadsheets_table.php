@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSheetsTable extends Migration
+class CreateSpreadsheetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateSheetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sheets', function (Blueprint $table) {
+        Schema::create('spreadsheets', function (Blueprint $table) {
             $table->id();
-            $table->integer('spreadsheets_id');
-            $table->string('sheet_id');
-            $table->string('slack_user_id');
+            $table->string('spreadsheet_id')->unique();
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
         });
@@ -30,6 +28,6 @@ class CreateSheetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sheets');
+        Schema::dropIfExists('spreadsheets');
     }
 }

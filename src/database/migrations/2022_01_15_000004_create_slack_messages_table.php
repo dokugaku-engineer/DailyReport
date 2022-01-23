@@ -15,9 +15,9 @@ class CreateSlackMessagesTable extends Migration
     {
         Schema::create('slack_messages', function (Blueprint $table) {
             $table->id();
-            $table->string('slack_user_id');
-            $table->string('slack_team_id');
-            $table->string('slack_channel_id');
+            $table->foreignId('slack_users_id')->constrained('slack_users');
+            $table->foreignId('slack_teams_id')->constrained('slack_teams');
+            $table->foreignId('slack_channels_id')->constrained('slack_channels');
             $table->text('message');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');

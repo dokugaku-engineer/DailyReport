@@ -27,7 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('v1.0/slack_posts',[SlackPostsController::class, 'store']);
 
 Route::get('v1.0/slack',[SlackController::class, 'index']);
-Route::post('v1.0/slack',[SlackController::class, 'store']);
+Route::post('{version}/slack',[SlackController::class, 'store']);
 Route::get('v1.0/slack',[SlackController::class, 'show']);
 Route::put('v1.0/slack',[SlackController::class, 'update']);
 Route::delete('v1.0/slack',[SlackController::class, 'destroy']);

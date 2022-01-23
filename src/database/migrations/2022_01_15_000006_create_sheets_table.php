@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSlackTeamsTable extends Migration
+class CreateSheetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateSlackTeamsTable extends Migration
      */
     public function up()
     {
-        Schema::create('slack_teams', function (Blueprint $table) {
+        Schema::create('sheets', function (Blueprint $table) {
             $table->id();
-            $table->string('slack_team_id');
+            $table->foreignId('spreadsheets_id')->constrained('spreadsheets');
+            $table->string('sheet_id')->unique();
+            $table->foreignId('slack_users_id')->constrained('slack_users');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
         });
@@ -28,6 +30,6 @@ class CreateSlackTeamsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('slack_teams');
+        Schema::dropIfExists('sheets');
     }
 }

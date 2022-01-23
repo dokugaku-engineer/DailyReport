@@ -15,11 +15,15 @@ class CreateSlackToSpreadsheetTable extends Migration
     {
         Schema::create('slack_to_spreadsheet', function (Blueprint $table) {
             $table->id();
-            $table->integer('slack_channels_id');
-            $table->integer('spreadsheets_id');
+            $table->foreignId('slack_channels_id')->constrained('slack_channels');
+            $table->foreignId('spreadsheets_id')->constrained('spreadsheets');
             $table->string('key_word');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
+
+            $table->unique('slack_channels_id');
+            $table->unique('spreadsheets_id');
+            $table->unique('key_word');
         });
     }
 

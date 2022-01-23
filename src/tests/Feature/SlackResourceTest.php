@@ -26,8 +26,8 @@ class SlackResourceTest extends TestCase
     public function test_create_resource()
     {       
             $team_id = 'U02PM9L823C';
-            $channel_id = ['slack_channel_id'=>'C02ULAS9UGZ'];
-            $user_id = ['slack_user_id'=>'U02PM9L823C'];
+            $channel_id = ['slack_channel_id' => 'C02ULAS9UGZ'];
+            $user_id = ['slack_user_id' => 'U02PM9L823C'];
             $slack_team_model = new SlackTeam;
             $result_of_save_record = $slack_team_model->create([
                 'slack_team_id' => $team_id 

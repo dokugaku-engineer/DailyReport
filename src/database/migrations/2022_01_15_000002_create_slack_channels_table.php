@@ -15,8 +15,8 @@ class CreateSlackChannelsTable extends Migration
     {
         Schema::create('slack_channels', function (Blueprint $table) {
             $table->id();
-            $table->string('slack_channel_id');
-            $table->integer('slack_teams_id');
+            $table->string('slack_channel_id')->unique();
+            $table->foreignId('slack_teams_id')->constrained('slack_teams');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
         });

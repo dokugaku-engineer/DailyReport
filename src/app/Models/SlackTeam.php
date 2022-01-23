@@ -15,13 +15,15 @@ class SlackTeam extends Model
     protected $fillable = [
         'slack_team_id'
     ];
+    
     /**
      * Slack_Channelsテーブルとの関連付けを行う
      * @return SlackChannel SlackChannelモデルを返す
      */
+
     public function associateSlackChannels()
     {
-        return $this->hasMany(SlackChannel::class,'slack_teams_id');
+        return $this->hasMany(SlackChannel::class, 'slack_teams_id');
     }
 
     /**
@@ -30,21 +32,19 @@ class SlackTeam extends Model
      */
     public function associateSlackUsers()
     {
-        return $this->hasMany(SlackUser::class,'slack_teams_id');
+        return $this->hasMany(SlackUser::class, 'slack_teams_id');
     }
 
     /**
-     * Slack_TeamsテーブルにIDが登録されているか確認する
-     * @param mixed $team_id Slackのteam_id
-     * @return boolean 
+     * Slackリソースの登録を行う
+     * @param mixed $team_id SlackのチームID
+     * @param mixed $channel_id SlackのチャンネルID
+     * @param mixed $user_id SlackのユーザーID
      */
-    public function getTeamIdExistence($team_id)
+    public static function registerSlackResources($team_id, $channel_id, $user_id):void
     {
-        //DBへ存在チェック処理を行う
-        $result = $this -> where('slack_team_id',$team_id)->exists();
-
-        //結果を返す
-        return $result;
+        $saved_slack_team = SlackTeam::create(['slack_team_id' => $team_id]);
+        $saved_slack_team->associateSlackChannels()->create(['slack_channel_id' => $channel_id]);
+        $saved_slack_team->associateSlackUsers()->create(['slack_user_id' => $user_id]);
     }
 }
-

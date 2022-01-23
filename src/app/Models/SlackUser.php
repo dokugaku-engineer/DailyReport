@@ -20,25 +20,6 @@ class SlackUser extends Model
      */
     public function slackTeam()
     {
-        return $this->belongsTo(SlackTeam::class,'slack_teams_id');
+        return $this->belongsTo(SlackTeam::class, 'slack_teams_id');
     }
-
-    /**
-     * slack_userテーブルにユーザーIDが登録されているか確認する
-     * @param array $user_ids Slackのuser_idの配列
-     * @return boolean 
-     */   
-    public function getUserIdExistence($user_ids)
-    {
-        //DBへ存在チェック処理を行う
-        foreach($user_ids as $user_id){
-            $result = $this->Where($user_id)->exists();
-
-            if($result==false){
-                break;
-            }
-        }
-        //結果を返す
-        return $result;
-    }   
 }

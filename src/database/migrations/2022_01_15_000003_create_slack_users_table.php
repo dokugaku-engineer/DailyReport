@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSpreadsheetsTable extends Migration
+class CreateSlackUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateSpreadsheetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('spreadsheets', function (Blueprint $table) {
+        Schema::create('slack_users', function (Blueprint $table) {
             $table->id();
-            $table->string('spreadsheet_id');
+            $table->string('slack_user_id')->unique();
+            $table->foreignId('slack_teams_id')->constrained('slack_teams');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
         });
@@ -28,6 +29,6 @@ class CreateSpreadsheetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('spreadsheets');
+        Schema::dropIfExists('slack_users');
     }
 }
