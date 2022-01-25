@@ -24,22 +24,22 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 */
 
-Route::post('v1.0/slack_posts',[SlackPostsController::class, 'store']);
+Route::post('slack_posts',[SlackPostsController::class, 'store']);
 
-Route::get('v1.0/slack',[SlackController::class, 'index']);
+Route::get('slack',[SlackController::class, 'index']);
 Route::post('{version}/slack',[SlackController::class, 'store']);
-Route::get('v1.0/slack',[SlackController::class, 'show']);
-Route::put('v1.0/slack',[SlackController::class, 'update']);
-Route::delete('v1.0/slack',[SlackController::class, 'destroy']);
+Route::get('slack',[SlackController::class, 'show']);
+Route::put('slack',[SlackController::class, 'update']);
+Route::delete('slack',[SlackController::class, 'destroy']);
 
-Route::get('v1.0/spreadsheets',[SpreadsheetsController::class, 'index']);
-Route::post('v1.0/spreadsheets',[SpreadsheetsController::class, 'store']);
-Route::get('v1.0/spreadsheets',[SpreadsheetsController::class, 'show']);
-Route::put('v1.0/spreadsheets',[SpreadsheetsController::class, 'update']);
-Route::delete('v1.0/spreadsheets',[SpreadsheetsController::class, 'destroy']);
+Route::get('spreadsheets',[SpreadsheetsController::class, 'index']);
+Route::post('spreadsheets',[SpreadsheetsController::class, 'store']);
+Route::get('spreadsheets',[SpreadsheetsController::class, 'show']);
+Route::put('spreadsheets',[SpreadsheetsController::class, 'update']);
+Route::delete('spreadsheets',[SpreadsheetsController::class, 'destroy']);
 
-Route::get('v1.0/slack_to_spreadsheet',[SlackToSpreadsheetController::class, 'index']);
-Route::post('v1.0/slack_to_spreadsheet',[SlackToSpreadsheetController::class, 'store']);
-Route::get('v1.0/slack_to_spreadsheet',[SlackToSpreadsheetController::class, 'show']);
-Route::put('v1.0/slack_to_spreadsheet',[SlackToSpreadsheetController::class, 'update']);
-Route::delete('v1.0/slack_to_spreadsheet',[SlackToSpreadsheetController::class, 'destroy']);
+Route::get('slack_to_spreadsheet',[SlackToSpreadsheetController::class, 'index']);
+Route::post('slack_to_spreadsheet',[SlackToSpreadsheetController::class, 'store']);
+Route::get('slack_to_spreadsheet',[SlackToSpreadsheetController::class, 'show']);
+Route::put('slack_to_spreadsheet',[SlackToSpreadsheetController::class, 'update']);
+Route::delete('slack_to_spreadsheet',[SlackToSpreadsheetController::class, 'destroy']);

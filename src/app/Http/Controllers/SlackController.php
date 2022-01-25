@@ -22,15 +22,16 @@ class SlackController extends Controller
     {
         //
     }
-    
+
     /**
      * Store a newly created resource in storage.
      * @bodyParam string[] ["team_id" => "a4rtrdt", "channel_id" => "ad46dr5", "user_id" => "Ude4643d"]
-     * @param  \Illuminate\Http\Request  $request 
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
+
         $validated = $request->validate([
             'team_id' => 'required|unique:slack_teams,slack_team_id|string',
             'channel_id' => 'required|unique:slack_channels,slack_channel_id|string',
@@ -38,11 +39,10 @@ class SlackController extends Controller
         ]);
 
         DB::beginTransaction();
-        
+
         try {
             SlackTeam::registerSlackResources($validated['team_id'], $validated['channel_id'], $validated['user_id']);
-        
-        } catch (Exception $e){ 
+        } catch (Exception $e) {
             DB::rollBack();
 
             throw $e;
@@ -51,7 +51,7 @@ class SlackController extends Controller
         DB::commit();
 
         return response()->json_content('201', 'Resource_Created');
-}
+    }
 
     /**
      * Display the specified resource.

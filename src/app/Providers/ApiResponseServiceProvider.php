@@ -32,6 +32,4 @@ class ApiResponseServiceProvider extends ServiceProvider
             ]);
         });
     }
-
-
 }

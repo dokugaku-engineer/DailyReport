@@ -15,7 +15,7 @@ class SlackTeam extends Model
     protected $fillable = [
         'slack_team_id'
     ];
-    
+
     /**
      * Slack_Channelsテーブルとの関連付けを行う
      * @return SlackChannel SlackChannelモデルを返す
@@ -41,7 +41,7 @@ class SlackTeam extends Model
      * @param mixed $channel_id SlackのチャンネルID
      * @param mixed $user_id SlackのユーザーID
      */
-    public static function registerSlackResources($team_id, $channel_id, $user_id):void
+    public static function registerSlackResources($team_id, $channel_id, $user_id): void
     {
         $saved_slack_team = SlackTeam::create(['slack_team_id' => $team_id]);
         $saved_slack_team->associateSlackChannels()->create(['slack_channel_id' => $channel_id]);
