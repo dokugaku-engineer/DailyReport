@@ -9,7 +9,8 @@ use App\Models\SlackUser;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
-use App\Services\MultidimensionalArrayEditor;
+use App\Http\Requests\SlackRequest;
+use Illuminate\Support\Facades\Validator;
 
 class SlackController extends Controller
 {
@@ -26,29 +27,14 @@ class SlackController extends Controller
     /**
      * Store a newly created resource in storage.
      * @bodyParam string[] ["team_id" => "a4rtrdt", "channel_id" => "ad46dr5", "user_id" => "Ude4643d"]
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\SlackRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SlackRequest $request)
     {
+        $validated = $request->validated();
 
-        $validated = $request->validate([
-            'team_id' => 'required|unique:slack_teams,slack_team_id|string',
-            'channel_id' => 'required|unique:slack_channels,slack_channel_id|string',
-            'user_id' => 'required|unique:slack_users,slack_user_id|string'
-        ]);
-
-        DB::beginTransaction();
-
-        try {
-            SlackTeam::registerSlackResources($validated['team_id'], $validated['channel_id'], $validated['user_id']);
-        } catch (Exception $e) {
-            DB::rollBack();
-
-            throw $e;
-        }
-
-        DB::commit();
+        SlackTeam::registerSlackResources($validated['team_id'], $validated['channel_id'], $validated['user_id']);
 
         return response()->json_content('201', 'Resource_Created');
     }

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\SlackChannel;
 use App\Models\SlackUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class SlackTeam extends Model
 {
@@ -20,8 +22,7 @@ class SlackTeam extends Model
      * Slack_Channelsテーブルとの関連付けを行う
      * @return SlackChannel SlackChannelモデルを返す
      */
-
-    public function associateSlackChannels()
+    public function slackChannels()
     {
         return $this->hasMany(SlackChannel::class, 'slack_teams_id');
     }
@@ -30,7 +31,7 @@ class SlackTeam extends Model
      * Slack_Usersテーブルとの関連付けを行う
      * @return SlackUser SlackUserモデルを返す
      */
-    public function associateSlackUsers()
+    public function slackUsers()
     {
         return $this->hasMany(SlackUser::class, 'slack_teams_id');
     }
@@ -43,8 +44,17 @@ class SlackTeam extends Model
      */
     public static function registerSlackResources($team_id, $channel_id, $user_id): void
     {
-        $saved_slack_team = SlackTeam::create(['slack_team_id' => $team_id]);
-        $saved_slack_team->associateSlackChannels()->create(['slack_channel_id' => $channel_id]);
-        $saved_slack_team->associateSlackUsers()->create(['slack_user_id' => $user_id]);
+        DB::beginTransaction();
+
+        try {
+            $saved_slack_team = SlackTeam::firstOrCreate(['slack_team_id' => $team_id]);
+            $saved_slack_team->slackChannels()->firstOrCreate(['slack_channel_id' => $channel_id]);
+            $saved_slack_team->slackUsers()->firstOrCreate(['slack_user_id' => $user_id]);
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            throw $e;
+        }
+        DB::commit();
     }
 }

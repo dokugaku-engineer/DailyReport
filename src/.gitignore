@@ -21,5 +21,4 @@ from_slack_message_edit.json
 from_slack_message_delete.json
 from_slack_message_post.json
 .phpdoc
-/app/.phpdoc
 sniffer_report.xml

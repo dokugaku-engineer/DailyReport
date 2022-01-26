@@ -18,23 +18,21 @@ class SlackResourceTest extends TestCase
      */
     public function test_access_resource()
     {
-        $response = $this->post('/api/v1.0/slack');
+        $response = $this->postJSON('/api/slack', ['team_id' => 'U03GB423C', 'channel_id' => 'C03KIES9UGZ', 'user_id' => 'U06KQD823C']);
 
         $response->assertStatus(200);
     }
 
     public function test_create_resource()
     {       
-            $team_id = 'U02PM9L823C';
-            $channel_id = ['slack_channel_id' => 'C02ULAS9UGZ'];
-            $user_id = ['slack_user_id' => 'U02PM9L823C'];
-            $slack_team_model = new SlackTeam;
-            $result_of_save_record = $slack_team_model->create([
-                'slack_team_id' => $team_id 
-            ]);
-            $result_of_save_record->associateSlackChannels()->create($channel_id);
-            $result_of_save_record->associateSlackUsers()->create($user_id);
+            $team_id = 'U03GB423C';
+            $channel_id = 'C03KIES9UGZ';
+            $user_id = 'U06KQD823C';
 
-            $this -> assertModelExists($result_of_save_record);
+            $saved_slack_team = SlackTeam::firstOrCreate(['slack_team_id' => $team_id]);
+            $saved_slack_team->slackChannels()->firstOrCreate(['slack_channel_id' => $channel_id]);
+            $saved_slack_team->slackUsers()->firstOrCreate(['slack_user_id' => $user_id]);
+
+            $this -> assertModelExists($saved_slack_team);
     }
 }

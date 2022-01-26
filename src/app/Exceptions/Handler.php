@@ -51,6 +51,9 @@ class Handler extends ExceptionHandler
             case 404:
                 return response()->json_content(ResponseStatus::HTTP_NOT_FOUND, 'Not Found');
                 break;
+            case 422:
+                return response()->json_content(ResponseStatus::HTTP_UNPROCESSABLE_ENTITY, 'Unprocessable Entity');
+                break;
             default:
                 return response()->json_content(ResponseStatus::HTTP_BAD_REQUEST, 'Bad Request');
                 break;
