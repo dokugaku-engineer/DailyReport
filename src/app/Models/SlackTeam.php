@@ -9,6 +9,7 @@ use App\Models\SlackUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class SlackTeam extends Model
 {
@@ -51,9 +52,15 @@ class SlackTeam extends Model
             $saved_slack_team->slackChannels()->firstOrCreate(['slack_channel_id' => $channel_id]);
             $saved_slack_team->slackUsers()->firstOrCreate(['slack_user_id' => $user_id]);
         } catch (Exception $e) {
+
             DB::rollBack();
 
-            throw $e;
+            $response = response()->json([
+                'status' => 500,
+                'error' => 'DataBase Error',
+            ], 500);
+
+            throw new HttpResponseException($response);
         }
         DB::commit();
     }

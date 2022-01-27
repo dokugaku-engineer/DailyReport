@@ -36,7 +36,7 @@ class SlackController extends Controller
 
         SlackTeam::registerSlackResources($validated['team_id'], $validated['channel_id'], $validated['user_id']);
 
-        return response()->json_content('201', 'Resource_Created');
+        return response()->json_content('201', 'Resource_Created', 201);
     }
 
     /**

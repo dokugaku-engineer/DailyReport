@@ -37,25 +37,25 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $e): Response
     {
         $statusCode = $e->getCode();
-
+        dd($statusCode);
         switch ($statusCode) {
             case 400:
-                return response()->json_content(ResponseStatus::HTTP_BAD_REQUEST, 'Bad Request');
+                return response()->json_content(ResponseStatus::HTTP_BAD_REQUEST, 'Bad Request', 400);
                 break;
             case 401:
-                return response()->json_content(ResponseStatus::HTTP_UNAUTHORIZED, 'Unauthorized');
+                return response()->json_content(ResponseStatus::HTTP_UNAUTHORIZED, 'Unauthorized', 402);
                 break;
             case 403:
-                return response()->json_content(ResponseStatus::HTTP_FORBIDDEN, 'Forbidden');
+                return response()->json_content(ResponseStatus::HTTP_FORBIDDEN, 'Forbidden', 403);
                 break;
             case 404:
-                return response()->json_content(ResponseStatus::HTTP_NOT_FOUND, 'Not Found');
+                return response()->json_content(ResponseStatus::HTTP_NOT_FOUND, 'Not Found', 404);
                 break;
             case 422:
-                return response()->json_content(ResponseStatus::HTTP_UNPROCESSABLE_ENTITY, 'Unprocessable Entity');
+                return response()->json_content(ResponseStatus::HTTP_UNPROCESSABLE_ENTITY, 'Unprocessable Entity', 422);
                 break;
             default:
-                return response()->json_content(ResponseStatus::HTTP_BAD_REQUEST, 'Bad Request');
+                return response()->json_content(ResponseStatus::HTTP_BAD_REQUEST, 'Bad Request', 400);
                 break;
         }
     }
