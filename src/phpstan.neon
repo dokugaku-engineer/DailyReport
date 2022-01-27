@@ -1,0 +1,15 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+parameters:
+    level: 5
+    paths:
+        - app
+
+    ignoreErrors:
+        - '#Unreachable statement - code above always terminates.#'
+        - '#Method App\\Http\\Controllers\\SlackController::.* should return Illuminate\\Http\\Response but return statement is missing#'
+        - '#Method App\\Http\\Controllers\\SlackToSpreadsheetController::.* should return Illuminate\\Http\\Response but return statement is missing#'
+        - '#Method App\\Http\\Controllers\\SpreadsheetsController::.* should return Illuminate\\Http\\Response but return statement is missing#'
+        - '#Method App\\Models\\.*::.*\(\) should return App\\Models\\.* but returns Illuminate\\Database\\Eloquent\\Relations\\.*#'
+        - '#Class App\\Services\\PostSpreadsheet not found#'
+        - '#PHPDoc tag @var#'

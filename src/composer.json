@@ -18,7 +18,10 @@
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^5.10",
-        "phpunit/phpunit": "^9.5.10"
+        "nunomaduro/larastan": "^1.0",
+        "phpmd/phpmd": "^2.11",
+        "phpunit/phpunit": "^9.5.10",
+        "squizlabs/php_codesniffer": "*"
     },
     "autoload": {
         "psr-4": {
@@ -45,6 +48,9 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "sniffer": [
+            "./vendor/squizlabs/php_codesniffer/bin/phpcs --standard=phpcs.xml --report=xml --report-file=./sniffer_report.xml ./"
         ]
     },
     "extra": {
