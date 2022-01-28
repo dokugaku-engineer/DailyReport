@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="CodeSniffer">
+    <rule ref="PSR12">
+        <exclude name="Generic.Files.LineLength"/>
+        <exclude name="Generic.Files.LineEndings.InvalidEOLChar"/>
+        <exclude name="PSR12.Files.FileHeader.SpacingAfterBlock"/>
+        <exclude name="PSR12.Files.FileHeader.IncorrectGrouping"/>
+    </rule>
+
+    <arg name="colors" />
+
+    <arg value="ps" />
+    <exclude-pattern>/app/Console/Kernel.php</exclude-pattern>
+    <exclude-pattern>/app/Http/Middleware/</exclude-pattern>
+    <exclude-pattern>/app/Http/Controllers/Controller.php</exclude-pattern>
+    <exclude-pattern>/bootstrap/</exclude-pattern>
+    <exclude-pattern>/config/</exclude-pattern>
+    <exclude-pattern>/database/</exclude-pattern>
+    <exclude-pattern>/public/</exclude-pattern>
+    <exclude-pattern>/resources/</exclude-pattern>
+    <exclude-pattern>/routes/</exclude-pattern>
+    <exclude-pattern>/storage/</exclude-pattern>
+    <exclude-pattern>/vendor/</exclude-pattern>
+    <exclude-pattern>/server.php</exclude-pattern>
+    <exclude-pattern>/tests</exclude-pattern>
+</ruleset>

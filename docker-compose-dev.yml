@@ -33,7 +33,7 @@ services:
       - "${DB_HOST_PORT:-13306}:3306"
     volumes:
       - mysql-data:/var/lib/mysql
-      - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/db/conf/:/etc/mysql/conf.d/
       - ./docker/db/sql:/docker-entrypoint-initdb.d
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
