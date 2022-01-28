@@ -150,7 +150,7 @@ sudo yum install git
 git version
 ```  
 
-### 5.Github連携  
+### 5.GitHub連携  
 前提：自分のリモートリポジトリに開発用リポジトリからfork済み
 
 - プロジェクト用ディレクトリを作成 
@@ -200,11 +200,14 @@ sudo ssh -T git@github.com
 ```  
 →「Attempts to ssh to GitHub」と表示されることを確認 
 
-- Githubからプロジェクト用リポジトリをクローン
+- GitHubからプロジェクト用リポジトリをクローン
 ```
-git clone git@github.com:YOUR_NAME/DailyReport.git
+git clone git@github.com:dokugaku-engineer/DailyReport.git
 ``` 
-※自分のリモートリポジトリにプロジェクトリポジトリをforkしていること  
+- リモートリポジトリを登録  
+```
+git remote add origin https://github.com/dokugaku-engineer/DailyReport.git
+```
 
 ### 6.MySQLクライアントインストール(任意)  
 ※RDS（MySQL）に保存したデータを確認するために利用  
