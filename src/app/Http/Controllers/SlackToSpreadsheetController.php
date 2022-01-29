@@ -34,10 +34,9 @@ class SlackToSpreadsheetController extends Controller
     {
         $validated = $request->validated();
 
-        SlackToSpreadsheet::registerSlackToSpreadsheetResources
-        (
-            $validated['slack_channel_id'], 
-            $validated['spreadsheet_id'], 
+        SlackToSpreadsheet::registerSlackToSpreadsheetResources(
+            $validated['slack_channel_id'],
+            $validated['spreadsheet_id'],
             $validated['key_word']
         );
 

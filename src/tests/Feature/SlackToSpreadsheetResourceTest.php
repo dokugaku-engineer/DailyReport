@@ -20,7 +20,7 @@ class SlackToSpreadsheetResourceTest extends TestCase
     {
         $response = $this->withHeaders([
             'Content-Type' => 'application/json'
-            ])->postJSON('/api/slack_to_spreadsheet', ['slack_channels_id' => '1', 'spreadsheets_id' => '1', 'key_word' => '.*日報.*']);
+            ])->postJSON('/api/slack_to_spreadsheet', ['slack_channel_id' => 'channel1', 'spreadsheet_id' => '1vB6hlCx_aitiNQw2Um_J0WnNnR6ZDbgjZi6BEB2K6X8', 'key_word' => '.*[日報].*']);
 
         $response->assertStatus(201);
     }
