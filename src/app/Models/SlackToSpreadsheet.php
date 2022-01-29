@@ -63,7 +63,7 @@ class SlackToSpreadsheet extends Model
             //spreadsheetsテーブルからIDを取得
             $spreadsheets = new Spreadsheet(['spreadsheet_id', $spreadsheet_id]);
             $spreadsheets_id= $spreadsheets->value('id');
-            dd($slack_channels_id);
+            dd($spreadsheets_id);
             //DB保存
             $saved_slack_to_spreadsheet = SlackToSpreadsheet::firstOrCreate([
                 'slack_channels_id' => $slack_channels_id,
