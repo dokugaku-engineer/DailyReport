@@ -48,39 +48,24 @@ class SlackToSpreadsheet extends Model
 
     /**
      * slack_to_spreadsheetリソースの登録を行う
-     * @param mixed $spreadsheet_id SpreadsheetsのID
-     * @param mixed $slack_channel_id slack_channelのID
-     * @param mixed $key_word 日報投稿のトリガーとなる文字列
+     * @param string $spreadsheet_id SpreadsheetsのID
+     * @param string $slack_channel_id slack_channelのID
+     * @param string $key_word 日報投稿のトリガーとなる文字列
      */
-    public static function registerSlackToSpreadsheetResources($spreadsheet_id, $slack_channel_id, $key_word): void
+    public static function registerSlackToSpreadsheetResources(string $slack_channel_id, string $spreadsheet_id, string $key_word): void
     {
-        DB::beginTransaction();
+        $slack_channels_id = DB::table('slack_channels')->where('slack_channel_id', $slack_channel_id)->value('id');
+        $spreadsheets_id = DB::table('spreadsheets')->where('spreadsheet_id', $spreadsheet_id)->value('id');
 
-        try {
-            //slack_channelsテーブルからIDを取得
-            $slack_channels = new SlackChannel(['slack_channel_id', $slack_channel_id]);
-            $slack_channels_id= $slack_channels->value('id');
-            //spreadsheetsテーブルからIDを取得
-            $spreadsheets = new Spreadsheet(['spreadsheet_id', $spreadsheet_id]);
-            $spreadsheets_id= $spreadsheets->value('id');
-
-            //DB保存
-            $saved_slack_to_spreadsheet = SlackToSpreadsheet::firstOrCreate([
-                'slack_channels_id' => $slack_channels_id,
-                'spreadsheets_id' => $spreadsheets_id,
-                'key_word' => $key_word
-            ]);
-        } catch (Exception $e) {
-
-            DB::rollBack();
-
-            $response = response()->json([
-                'status' => 500,
-                'error' => 'DataBase Error',
-            ], 500);
-
+        if (is_null($slack_channels_id) || is_null($spreadsheets_id)) {
+            $response = response()->json_content(422, 'Unprocessable Entity', 422);
             throw new HttpResponseException($response);
         }
-        DB::commit();
+
+        SlackToSpreadsheet::firstOrCreate([
+            'slack_channels_id' => $slack_channels_id,
+            'spreadsheets_id' => $spreadsheets_id,
+            'key_word' => $key_word
+        ]);
     }
 }

@@ -32,5 +32,4 @@ class SlackChannel extends Model
     {
         return $this->hasMany(SlackToSpreadsheet::class, 'slack_channels_id');
     }
-
 }

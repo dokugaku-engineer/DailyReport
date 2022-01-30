@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Response;
 
@@ -20,12 +21,12 @@ class ApiResponseServiceProvider extends ServiceProvider
     /**
      * Bootstrap services.
      *
-     * @return void
+     * @return Response
      */
 
     public function boot()
     {
-        Response::macro('json_content', function ($status, $message, $response_code) {
+        Response::macro('json_content', function (int $status, string $message, int $response_code) {
             return response()->json([
                 'code' => $status,
                 'message' => $message

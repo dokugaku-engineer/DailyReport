@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Facade\FlareClient\Http\Response;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 use Symfony\Component\HttpFoundation\Response as ResponseStatus;
@@ -34,10 +36,9 @@ class Handler extends ExceptionHandler
      *
      * @return Response
      */
-    public function render($request, Throwable $e): Response
+    public function render($request, Throwable $e)
     {
         $statusCode = $e->getCode();
-        dd($statusCode);
         switch ($statusCode) {
             case 400:
                 return response()->json_content(ResponseStatus::HTTP_BAD_REQUEST, 'Bad Request', 400);
