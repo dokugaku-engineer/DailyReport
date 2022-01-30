@@ -18,9 +18,9 @@ class SpreadsheetResourceTest extends TestCase
         $response = $this->withHeaders([
             'Content-Type' => 'application/json'
             ])->postJSON('/api/spreadsheets', [
-                'spreadsheet_id' => '64gdtg2356de55LciB0UOx_BewOfzR6y1FGRXA4Q23U', 
-                'sheet_id' => '54643464', 
-                'slack_user_id' => 'U9JTE64'
+                'spreadsheet_id' => '84ki356de55LciB0UOx_BewOfzR6y1FGRXA4Q23U', 
+                'sheet_id' => '84643464', 
+                'slack_user_id' => 'UK35E64'
             ]);
 
         $response->assertStatus(201);
