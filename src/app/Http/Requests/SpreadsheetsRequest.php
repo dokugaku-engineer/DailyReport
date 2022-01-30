@@ -13,7 +13,7 @@ class SpreadsheetsRequest extends ApiErrorRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'spreadsheet_id' => 'required|string',

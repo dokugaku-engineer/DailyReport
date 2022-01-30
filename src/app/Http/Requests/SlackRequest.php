@@ -9,21 +9,11 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 class SlackRequest extends ApiErrorRequest
 {
     /**
-     * 認可チェック
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
-    /**
      * Slackリソースのバリデーションルールを返す
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'team_id' => 'required|string',

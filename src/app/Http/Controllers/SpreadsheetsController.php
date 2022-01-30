@@ -35,7 +35,7 @@ class SpreadsheetsController extends Controller
 
         Spreadsheet::registerSpreadsheetResources($validated['spreadsheet_id'], $validated['sheet_id'], $validated['slack_user_id']);
 
-        return response()->json_content('201', 'Resource_Created', 201);
+        return response()->json_content(201, 'Resource_Created', 201);
     }
 
     /**

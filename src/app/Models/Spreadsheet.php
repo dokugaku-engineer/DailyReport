@@ -30,11 +30,11 @@ class Spreadsheet extends Model
 
     /**
      * Spreadsheetリソースの登録を行う
-     * @param mixed $spreadsheet_id スプレッドシートID
-     * @param mixed $sheet_id スプレッドシートのシートID
-     * @param mixed $slack_user_id slack_usersテーブルのID
+     * @param string $spreadsheet_id スプレッドシートID
+     * @param string $sheet_id スプレッドシートのシートID
+     * @param string $slack_user_id slack_usersテーブルのID
      */
-    public static function registerSpreadsheetResources($spreadsheet_id, $sheet_id, $slack_user_id): void
+    public static function registerSpreadsheetResources(string $spreadsheet_id, string $sheet_id, string $slack_user_id): void
     {
         DB::beginTransaction();
 
