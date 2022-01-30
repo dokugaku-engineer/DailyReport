@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Response;
 
