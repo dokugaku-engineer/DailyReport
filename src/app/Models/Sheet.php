@@ -30,7 +30,7 @@ class Sheet extends Model
      * slack_usersテーブルとの関連付けを行う
      * @return SlackUser SlackUserモデルを返す
      */
-    public function slackUsers()
+    public function slackUser()
     {
         return $this->belongsTo(SlackUser::class, 'slack_users_id');
     }

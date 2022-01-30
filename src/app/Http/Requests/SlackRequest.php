@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class SlackRequest extends FormRequest
+class SlackRequest extends ApiErrorRequest
 {
     /**
      * 認可チェック
@@ -30,19 +30,5 @@ class SlackRequest extends FormRequest
             'channel_id' => 'required|string',
             'user_id' => 'required|string'
         ];
-    }
-
-    /**
-     * バリデーションチェック失敗時のエラーを投げる
-     *
-     */
-    protected function failedValidation(Validator $validator)
-    {
-        $response = response()->json([
-            'status' => 422,
-            'errors' => $validator->errors(),
-        ], 422);
-
-        throw new HttpResponseException($response);
     }
 }
