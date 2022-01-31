@@ -6,19 +6,19 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class SlackRequest extends ApiRequest
+class SpreadsheetsRequest extends ApiRequest
 {
     /**
-     * Slackリソースのバリデーションルールを返す
+     *  Spreadsheetリソースのバリデーションルールを返す
      *
      * @return array
      */
     public function rules(): array
     {
         return [
-            'team_id' => 'required|string',
-            'channel_id' => 'required|string',
-            'user_id' => 'required|string'
+            'spreadsheet_id' => 'required|string',
+            'sheet_id' => 'required|string',
+            'slack_user_id' => 'required|string'
         ];
     }
 }
