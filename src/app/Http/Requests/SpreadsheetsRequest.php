@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class SpreadsheetsRequest extends ApiErrorRequest
+class SpreadsheetsRequest extends ApiRequest
 {
     /**
      *  Spreadsheetリソースのバリデーションルールを返す
