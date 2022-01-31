@@ -57,11 +57,6 @@ class SlackToSpreadsheet extends Model
         $slack_channels_id = DB::table('slack_channels')->where('slack_channel_id', $slack_channel_id)->value('id');
         $spreadsheets_id = DB::table('spreadsheets')->where('spreadsheet_id', $spreadsheet_id)->value('id');
 
-        if (is_null($slack_channels_id) || is_null($spreadsheets_id)) {
-            $response = response()->json_content(422, 'Unprocessable Entity', 422);
-            throw new HttpResponseException($response);
-        }
-
         SlackToSpreadsheet::firstOrCreate([
             'slack_channels_id' => $slack_channels_id,
             'spreadsheets_id' => $spreadsheets_id,

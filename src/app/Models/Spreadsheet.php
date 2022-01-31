@@ -32,7 +32,7 @@ class Spreadsheet extends Model
      * slack_to_spreadsheetテーブルとの関連付けを行う
      * @return SlackToSpreadsheet SlackToSpreadsheetモデルを返す
      */
-    public function slackToSpreadsheet()
+    public function slackToSpreadsheets()
     {
         return $this->hasMany(SlackToSpreadsheet::class, 'spreadsheets_id');
     }

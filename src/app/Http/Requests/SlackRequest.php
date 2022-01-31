@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class SlackRequest extends ApiErrorRequest
+class SlackRequest extends ApiRequest
 {
     /**
      * Slackリソースのバリデーションルールを返す

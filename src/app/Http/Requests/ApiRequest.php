@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ApiErrorRequest extends FormRequest
+class ApiRequest extends FormRequest
 {
     /**
      * バリデーションチェック失敗時のエラーを投げる
