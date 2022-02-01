@@ -3,6 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\SlackChannel;
+use App\Models\Spreadsheet;
+use Exception;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
+use App\Http\Requests\SlackToSpreadsheetRequest;
+use App\Models\SlackToSpreadsheet;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Support\Facades\Validator;
 
 class SlackToSpreadsheetController extends Controller
 {
@@ -19,12 +28,20 @@ class SlackToSpreadsheetController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\SlackToSpreadsheetRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SlackToSpreadsheetRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        SlackToSpreadsheet::registerSlackToSpreadsheetResources(
+            $validated['slack_channel_id'],
+            $validated['spreadsheet_id'],
+            $validated['key_word']
+        );
+
+        return response()->json_content(201, 'Resource_Created', 201);
     }
 
     /**
