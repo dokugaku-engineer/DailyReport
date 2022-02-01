@@ -21,7 +21,7 @@ class Sheet extends Model
      * spreadsheetsテーブルとの関連付けを行う
      * @return Spreadsheet Spreadsheetモデルを返す
      */
-    public function spreadsheets()
+    public function spreadsheet()
     {
         return $this->belongsTo(Spreadsheet::class, 'spreadsheets_id');
     }
