@@ -21,9 +21,7 @@ class CreateSlackToSpreadsheetTable extends Migration
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
 
-            $table->unique('slack_channels_id');
-            $table->unique('spreadsheets_id');
-            $table->unique('key_word');
+            $table->unique(['slack_channels_id', 'spreadsheets_id', 'key_word'], 'slack_to_spreadsheet_unique');
         });
     }
 

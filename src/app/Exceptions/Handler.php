@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Facade\FlareClient\Http\Response;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 use Symfony\Component\HttpFoundation\Response as ResponseStatus;
