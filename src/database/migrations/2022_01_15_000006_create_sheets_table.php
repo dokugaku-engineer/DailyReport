@@ -16,7 +16,7 @@ class CreateSheetsTable extends Migration
         Schema::create('sheets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('spreadsheets_id')->constrained('spreadsheets');
-            $table->string('sheet_id')->unique();
+            $table->string('sheet_id');
             $table->foreignId('slack_users_id')->constrained('slack_users');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');

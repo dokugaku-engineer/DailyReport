@@ -17,6 +17,76 @@
 - [TLS証明書作成](/doc/setup-of-ACM.md)
 - [ロードバランサー構築](/doc/setup-of-ALB.md)
 - [RDS構築](/doc/setup-of-RDS.md)  
+- [ECR構築](/doc/setup-of-ECR.md)
+- [EC2構築](/doc/setup-of-EC2.md)  
+- [アプリケーション実行環境構築](/doc/setup-of-APP.md)  
+
+## 開発環境初期設定
+### Dockerコンテナの環境変数を設定(.envファイル)  
+- プロジェクトフォルダ直下に.envファイルを作成
+- .envファイルを以下のように記載  
+```
+##'webコンテナ用環境変数'##
+#WEB_HOST_PORT=[OPTION]
+
+##'db'コンテナ用環境変数##
+#DB_HOST_PORT=[OPTION]
+DB_ROOT_PASSWORD=[MUST]
+DB_NAME=[MUST]
+DB_USER=[MUST]
+DB_PASSWORD=[MUST]
+TIME_ZONE='Asia/Tokyo'
+```  
+※値が指定されていないものは以下を参考に入力
+|         項目          |  説明   | 備考 |
+| :-------------------: | :---: | :---: |  
+| WEB_HOST_PORT | webサーバのローカル側ポート指定 | 任意、空欄可 |
+| DB_HOST_PORT | DBサーバのローカル側ポート指定 | 任意、空欄可 |
+| DB_ROOT_PASSWORD | rootユーザーでmysqlログイン時のパスワード | 任意、必須  |
+| DB_NAME | データベース名を指定 | 任意、必須 |
+| DB_USER | mysql一般ユーザーを指定 | 任意、必須 |
+| DB_PASSWORD | mysql一般ユーザーのパスワードを指定 | 任意、必須 |
+| TIME_ZONE | タイムゾーンを指定 | 必須 |
+
+### コンテナ起動
+- プロジェクトディレクトリに移動し、以下のコマンドを実行 
+```
+docker-compose -f docker-compose-dev.yml up -d   
+```
+※Dockerコンテナ操作の際は-f <ファイル名.yml>を含むようにしてください。
+
+### Laravel環境設定ファイルの作成(.envファイル)  
+- プロジェクトディレクトリ/src直下に.envファイルを作成  
+※.env.sampleをコピーし、.envにリネーム
+- 以下の値を設定
+``` 
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=[Dockerコンテナの環境変数設定(.env)で指定した値]
+DB_USERNAME=root
+DB_PASSWORD=[Dockerコンテナの環境変数設定(.env)で指定した値]
+```  
+
+### アプリケーションキーの作成
+- Laravelインストールディレクトリにて以下のコマンドを実行し、アプリケーションキーを.envに登録
+```
+php artisan key:generate  
+```
+※.envファイルの「APP_KEY」に記載されていることを確認  
+
+### ライブラリのインストール
+- Laravelインストールディレクトリにて以下のコマンドを実行し、vendorディレクトリ下にライブラリをインストール
+```
+composer install
+```
+※vendor下にライブラリがインストールされていることを確認
+
+### マイグレーションの実行  
+- 以下のコマンドを実行し、データベースにテーブルを作成
+```
+php artisan migrate
+```
 
 ## ライセンス
 
