@@ -39,11 +39,11 @@ class SlackTeam extends Model
 
     /**
      * Slackリソースの登録を行う
-     * @param mixed $team_id SlackのチームID
-     * @param mixed $channel_id SlackのチャンネルID
-     * @param mixed $user_id SlackのユーザーID
+     * @param string $team_id SlackのチームID
+     * @param string $channel_id SlackのチャンネルID
+     * @param string $user_id SlackのユーザーID
      */
-    public static function registerSlackResources($team_id, $channel_id, $user_id): void
+    public static function registerSlackResources(string $team_id, string $channel_id, string $user_id): void
     {
         DB::beginTransaction();
 

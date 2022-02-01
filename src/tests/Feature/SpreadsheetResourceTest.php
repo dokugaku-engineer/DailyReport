@@ -5,14 +5,11 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Models\SlackTeam;
-use App\Models\SlackChannel;
-use App\Models\SlackUser;
 
-class SlackResourceTest extends TestCase
+class SpreadsheetResourceTest extends TestCase
 {
     /**
-     * Slackリソースを登録しできることをテスト
+     * Spreadsheetsリソースを登録しできることをテスト
      *
      * @return void
      */
@@ -20,7 +17,11 @@ class SlackResourceTest extends TestCase
     {
         $response = $this->withHeaders([
             'Content-Type' => 'application/json'
-            ])->postJSON('/api/slack', ['team_id' => 'U054BC', 'channel_id' => 'C6KG53Z', 'user_id' => 'U08R23C']);
+            ])->postJSON('/api/spreadsheets', [
+                'spreadsheet_id' => '84ki356de55LciB0UOx_BewOfzR6y1FGRXA4Q23U', 
+                'sheet_id' => '84643464', 
+                'slack_user_id' => 'UK35E64'
+            ]);
 
         $response->assertStatus(201);
     }

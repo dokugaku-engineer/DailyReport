@@ -3,6 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Spreadsheet;
+use App\Models\Sheet;
+use Exception;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
+use App\Http\Requests\SpreadsheetsRequest;
+use Illuminate\Support\Facades\Validator;
 
 class SpreadsheetsController extends Controller
 {
@@ -18,13 +25,17 @@ class SpreadsheetsController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
+     * @bodyParam string[] ["spreadsheet_id" => "a4rtrdt", "sheet_id" => "ad46dr5", "slack_user_id" => "Ude4643d"]
+     * @param  \App\Http\Requests\SpreadsheetsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SpreadsheetsRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        Spreadsheet::registerSpreadsheetResources($validated['spreadsheet_id'], $validated['sheet_id'], $validated['slack_user_id']);
+
+        return response()->json_content(201, 'Resource_Created', 201);
     }
 
     /**

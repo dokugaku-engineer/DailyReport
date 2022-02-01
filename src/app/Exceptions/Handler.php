@@ -34,10 +34,9 @@ class Handler extends ExceptionHandler
      *
      * @return Response
      */
-    public function render($request, Throwable $e): Response
+    public function render($request, Throwable $e)
     {
         $statusCode = $e->getCode();
-        dd($statusCode);
         switch ($statusCode) {
             case 400:
                 return response()->json_content(ResponseStatus::HTTP_BAD_REQUEST, 'Bad Request', 400);
