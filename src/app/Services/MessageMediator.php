@@ -5,6 +5,18 @@ namespace App\Services;
 use Google\Client;
 use Google\Service\Sheets;
 use Google\Service\Sheets\ValueRange;
+use Illuminate\Support\Facades\Response;
+use App\Http\Requests\SlackPostsRequest;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Models\SlackMessage;
+use App\Services\MessageMediator;
+use Exception;
+use MessageFormatter;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+
 
 class MessageMediator
 {
@@ -55,10 +67,11 @@ class MessageMediator
     }
 
     // SlackEventAPIから送信されるチャレンジへの返答
-    public static function ResponseSlackChallenge($request){
-        if ($request['type'] == 'url_verification') {
-            return response()->json($request['challenge']);
+    public static function ResponseSlackChallenge($validated){
+        if ($validated['type'] == 'url_verification') {
+            return response()->json(["challenge" => $validated['challenge']]);
         }
+        
     }
 
 

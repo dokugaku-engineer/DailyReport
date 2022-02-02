@@ -24,10 +24,14 @@ class SlackPostsController extends Controller
      */
     public function store(SlackPostsRequest $request)
     {
-        $validated = $request->validated();
 
-        MessageMediator::ResponseSlackChallenge($validated);
-/*
+        $validated = $request->validated();
+        
+       // $test = MessageMediator::ResponseSlackChallenge($validated);
+       if ($validated['type'] == 'url_verification') {
+        return response()->json(["challenge" => $validated['challenge']]);
+    }
+        /*
         // 必要情報をslack_messageに保存
         $saved_slack_message = SlackMessage::registerSlackToSpreadsheetResources(
             $validated['team_id'],
