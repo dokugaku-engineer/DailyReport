@@ -6,14 +6,14 @@ use Google\Client;
 use Google\Service\Sheets;
 use Google\Service\Sheets\ValueRange;
 
-class PostSpreadsheet
+class MessageMediator
 {
 
     // スプレッドシート挿入用Function
     static function insertSpreadsheet($insert_data)
     {
         // スプレッドシートを操作するGoogleClientインスタンスの生成（後述のファンクション）
-        $sheets = PostSpreadsheet::makeGoogleServiceSheetsInstance();
+        $sheets = MessageMediator::makeGoogleServiceSheetsInstance();
 
         // データを格納したい SpreadSheet のURLが
         // https://docs.google.com/spreadsheets/d/×××××××××××××××××××/edit#gid=0
@@ -49,10 +49,16 @@ class PostSpreadsheet
         // storage/app/json フォルダに GCP からダウンロードした JSON ファイルを設置する
         $credentials_path = storage_path('app/json/credentials.json');
         $client = new Client();
-        $test = $client->setScopes([Sheets::SPREADSHEETS]);
-        dd($test);
+        $client->setScopes([Sheets::SPREADSHEETS]);
         $client->setAuthConfig($credentials_path);
         return new Sheets($client);
+    }
+
+    // SlackEventAPIから送信されるチャレンジへの返答
+    public static function ResponseSlackChallenge($request){
+        if ($request['type'] == 'url_verification') {
+            return response()->json($request['challenge']);
+        }
     }
 
 

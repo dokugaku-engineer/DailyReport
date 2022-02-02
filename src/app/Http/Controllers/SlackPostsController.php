@@ -6,8 +6,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\SlackMessage;
-use App\Services\PostSpreadsheet;
+use App\Services\MessageMediator;
 use Exception;
+use MessageFormatter;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
+use App\Http\Requests\SlackPostsRequest;
 
 class SlackPostsController extends Controller
 {
@@ -17,8 +22,36 @@ class SlackPostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SlackPostsRequest $request)
     {
+        $validated = $request->validated();
+
+        MessageMediator::ResponseSlackChallenge($validated);
+
+        // 必要情報をslack_messageに保存
+        $saved_slack_message = SlackMessage::registerSlackToSpreadsheetResources(
+            $validated['team_id'],
+            $validated['event.user'],
+            $validated['event.channel'],
+            $validated['event.text']
+        );
+/*
+        // スプレッドシートへの連携
+        $spread_sheet->insertSpreadsheet($insert_data);
+
+        // 成功レスポンスを返す
+        return response()->json_content(201, 'Resource_Created', 201);
+*/
+
+
+
+
+
+
+
+
+
+/*
         //SlackEventAPiから送られてくるチャレンジへの返答
         if ($request->input('type') == 'url_verification'){
             return response()->json($request->input('challenge'));
@@ -30,18 +63,18 @@ class SlackPostsController extends Controller
         $slack_user_id = $request->input('event.user');
         $message = $request->input('event.text');
 
-/*
+
         //dd(!$slack_team_id);
         //SlackEventAPIから送られてくるメッセージJSONのバリデーションチェック
         if(!$slack_channel_id || !$slack_team_id || !$message || !$slack_user_id){
             throw new Exception('',400);
             //return response()->json_content('400','Bad_REQUEST');
         }     
-*/
+
         //日報として格納する投稿かチェック（キーワードがあるか）
         //key_wordの値を取得して正規表現trueかどうか
 
-/*
+
 
         //SlackEventAPIから送られてくるメッセージをDBへ保存
         //SlackMessageモデルのインスタンスを生成
@@ -56,10 +89,10 @@ class SlackPostsController extends Controller
 
         $slack_message_model->save();
 
-*/
+
 
         //メッセージをSpreadsheetに連携
-        $spread_sheet = new PostSpreadsheet();
+        $spread_sheet = new MessageMediator();
 
         // スプレッドシートに格納するテストデータです
         $insert_data = [
@@ -72,7 +105,7 @@ class SlackPostsController extends Controller
         $spread_sheet->insertSpreadsheet($insert_data);
 
         return response('格納に成功！！', 200);       
-
+*/
 
     }
 
