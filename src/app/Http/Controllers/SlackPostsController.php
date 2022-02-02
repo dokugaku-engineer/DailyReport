@@ -27,7 +27,7 @@ class SlackPostsController extends Controller
         $validated = $request->validated();
 
         MessageMediator::ResponseSlackChallenge($validated);
-
+/*
         // 必要情報をslack_messageに保存
         $saved_slack_message = SlackMessage::registerSlackToSpreadsheetResources(
             $validated['team_id'],
