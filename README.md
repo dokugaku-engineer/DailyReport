@@ -21,6 +21,32 @@
 - [EC2構築](/doc/setup-of-EC2.md)  
 - [アプリケーション実行環境構築](/doc/setup-of-APP.md)  
 
+## Slack各IDの確認  
+### ユーザーID  
+- ワークスペースを開き、ユーザーアイコンを押下  
+- 「その他」> 「メンバーIDをコピー」記載のID（U~）
+
+### チャンネルID
+- チャンネルを開く
+- 画面上部のチャンネル名タブを押下
+- 「チャンネルID」記載のCから始まる文字列がチャンネルID（C~）
+
+### チームID  
+- ワークスペース名タブを押下 > 「設定と管理」 > 「ワークスペースの設定」でweb画面に遷移
+- 左タブ「Slackに戻る」を押下
+- URLの「T」から始まるパスパラメータがチームID
+
+## Spreadsheet各IDの確認
+### SpreadsheetID
+- スプレッドシートを開く
+- URLのd/～/edit#gid間の文字列がSpreadsheetID
+
+### SheetID
+- スプレッドシートを開く
+- URLの「git=」以降がSheetID
+
+![InkedWS000001_LI](https://user-images.githubusercontent.com/89679815/152363562-d620b494-4d85-484b-b099-87a725d35cd4.jpg)
+
 ## 開発環境初期設定
 ### Dockerコンテナの環境変数を設定(.envファイル)  
 - プロジェクトフォルダ直下に.envファイルを作成
