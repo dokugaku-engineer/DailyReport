@@ -36,7 +36,6 @@ class Handler extends ExceptionHandler
      *
      * @return Response
      */
-    /*
     public function render($request, Throwable $e)
     {
         $statusCode = $e->getCode();
@@ -61,5 +60,4 @@ class Handler extends ExceptionHandler
                 break;
         }
     }
-    */
 }

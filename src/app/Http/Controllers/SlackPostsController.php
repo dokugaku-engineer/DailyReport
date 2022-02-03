@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\SlackMessage;
-use App\Services\MessageMediator;
+use App\Services\SpreadsheetApi;
 use Exception;
 use MessageFormatter;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use App\Http\Requests\SlackPostsRequest;
+
 
 class SlackPostsController extends Controller
 {
@@ -24,93 +24,44 @@ class SlackPostsController extends Controller
      */
     public function store(SlackPostsRequest $request)
     {
-
         $validated = $request->validated();
-        
-       // $test = MessageMediator::ResponseSlackChallenge($validated);
-       if ($validated['type'] == 'url_verification') {
-        return response()->json(["challenge" => $validated['challenge']]);
-    }
-        /*
-        // 必要情報をslack_messageに保存
-        $saved_slack_message = SlackMessage::registerSlackToSpreadsheetResources(
-            $validated['team_id'],
-            $validated['event.user'],
-            $validated['event.channel'],
-            $validated['event.text']
-        );
-/*
-        // スプレッドシートへの連携
-        $spread_sheet->insertSpreadsheet($insert_data);
 
-        // 成功レスポンスを返す
-        return response()->json_content(201, 'Resource_Created', 201);
-*/
-
-
-
-
-
-
-
-
-
-/*
-        //SlackEventAPiから送られてくるチャレンジへの返答
-        if ($request->input('type') == 'url_verification'){
-            return response()->json($request->input('challenge'));
+        $check_result = SlackPostsRequest::checkChallengeRequest($validated);
+        if ($check_result == true) {
+            return response()->json(["challenge" => $validated['challenge']]);
         }
 
-        //SlackEventAPIから送られて来たメッセージJSONの内、使うものを取り出し
-        $slack_team_id = $request->input('team_id');
-        $slack_channel_id = $request->input('event.channel');
-        $slack_user_id = $request->input('event.user');
-        $message = $request->input('event.text');
+        $slack_messages_column = SlackMessage::readySlackPostsResources($validated['team_id'], $validated['event']['user'], $validated['event']['channel'], $validated['event']['text']);
+        $slack_to_spreadsheet_column = SlackMessage::getSlackToSpreadsheetInfo($slack_messages_column['slack_channels_id']);
 
+        SlackMessage::checkKeyWord($slack_to_spreadsheet_column['key_word'], $slack_messages_column['message']);
 
-        //dd(!$slack_team_id);
-        //SlackEventAPIから送られてくるメッセージJSONのバリデーションチェック
-        if(!$slack_channel_id || !$slack_team_id || !$message || !$slack_user_id){
-            throw new Exception('',400);
-            //return response()->json_content('400','Bad_REQUEST');
-        }     
+        $spreadsheet_id = SlackMessage::getSpreadsheetId($slack_to_spreadsheet_column['spreadsheets_id']);
+        $sheet_id = SlackMessage::getSheetId($slack_to_spreadsheet_column['spreadsheets_id'], $slack_messages_column['slack_users_id']);
 
-        //日報として格納する投稿かチェック（キーワードがあるか）
-        //key_wordの値を取得して正規表現trueかどうか
+        DB::beginTransaction();
 
+        $save_slack_messages = SlackMessage::registerSlackPostsResources(
+            $slack_messages_column['slack_teams_id'],
+            $slack_messages_column['slack_channels_id'],
+            $slack_messages_column['slack_users_id'],
+            $slack_messages_column['message']
+        );
 
+        $spreadsheet_client = new SpreadsheetApi();
 
-        //SlackEventAPIから送られてくるメッセージをDBへ保存
-        //SlackMessageモデルのインスタンスを生成
-        $slack_message_model = new SlackMessage;
-        //DBへデータを保存
-        $slack_message_model->slack_team_id = $slack_team_id;
-        $slack_message_model->slack_channel_id = $slack_channel_id;
-        $slack_message_model->slack_user_id = $slack_user_id;
-        $slack_message_model->message = $message;
-        
+        $result = $spreadsheet_client->insertSpreadsheet($slack_messages_column['message'], $spreadsheet_id, $sheet_id);
 
+        if ($result == false) {
+            DB::rollBack();
 
-        $slack_message_model->save();
+            $e = new Exception();
+            throw  $e;
+        }
 
+        DB::commit();
 
-
-        //メッセージをSpreadsheetに連携
-        $spread_sheet = new MessageMediator();
-
-        // スプレッドシートに格納するテストデータです
-        $insert_data = [
-            'slack_team_id' => $slack_team_id,
-            'slack_channel_id' => $slack_channel_id,
-            'slack_user_id'  => $slack_user_id,
-            'message'  => $message
-        ];
-
-        $spread_sheet->insertSpreadsheet($insert_data);
-
-        return response('格納に成功！！', 200);       
-*/
-
+        return response()->json_content(201, 'Resource_Created', 201);
     }
 
     /**

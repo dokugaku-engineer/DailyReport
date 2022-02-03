@@ -16,7 +16,6 @@ class SlackPostsRequest extends ApiRequest
     public function rules()
     {
         return [
-            'token' => 'sometimes|required|string',
             'challenge' => 'sometimes|required|string',
             'type' => 'sometimes|required|string',
             'team_id' => 'sometimes|required|string',
@@ -24,5 +23,16 @@ class SlackPostsRequest extends ApiRequest
             'event.user' => 'sometimes|required|string',
             'event.text' => 'sometimes|required|string'
         ];
+    }
+
+    public static function checkChallengeRequest($validated)
+    {
+        $type = $validated['type'];
+
+        if ($type == 'url_verification') {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

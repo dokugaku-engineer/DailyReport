@@ -48,8 +48,8 @@ class Spreadsheet extends Model
         DB::beginTransaction();
 
         try {
-            $slack_user = new SlackUser(['slack_user_id', $slack_user_id]);
-            $slack_users_id = $slack_user->value('id');
+            $slack_user = new SlackUser();
+            $slack_users_id = $slack_user->where('slack_user_id', $slack_user_id)->value('id');
             $saved_spreadsheet = Spreadsheet::firstOrCreate(['spreadsheet_id' => $spreadsheet_id]);
             $saved_spreadsheet->sheets()->firstOrCreate(['sheet_id' => $sheet_id, 'slack_users_id' => $slack_users_id]);
         } catch (Exception $e) {
