@@ -1,4 +1,4 @@
-# GoogleSheetsAPIの設定
+# Google Cloud Platformの設定
 
 ## 【概要】  
 

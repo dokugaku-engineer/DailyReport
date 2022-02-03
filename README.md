@@ -20,6 +20,8 @@
 - [ECR構築](/doc/setup-of-ECR.md)
 - [EC2構築](/doc/setup-of-EC2.md)  
 - [アプリケーション実行環境構築](/doc/setup-of-APP.md)  
+- [Slackアプリの設定](/doc/setup-of-SlackAPP.md)  
+- [Google Cloud Platformの設定](/doc/setup-of-GoogleCloudPlatform.md)  
 
 ## Slack各IDの確認  
 ### ユーザーID  
