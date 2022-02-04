@@ -12,34 +12,50 @@ use Exception;
 class SpreadsheetApi
 {
     /**
-     * スプレッドシートへ書き込みを行う
-     * @param string $slack_message Slackから送られてきたメッセージ
+     * インスタンス生成時に値が割当られる変数
+     * @param string $message Slackから送られてきたメッセージ
      * @param string $spreadsheet_id 連携先スプレッドシートのID
      * @param string $sheet_id 連携先シートのID
-     * @return bool true
      */
-    public static function insertSpreadsheet(string $slack_message, string $spreadsheet_id, string $sheet_id): bool
+    protected $message;
+    protected $spreadsheet_id;
+    protected $sheet_id;
+
+    /**
+     * スプレッドシートへ書き込みを行う
+     * @param string $message Slackから送られてきたメッセージ
+     * @param string $spreadsheet_id 連携先スプレッドシートのID
+     * @param string $sheet_id 連携先シートのID
+     */
+    public function __construct(string $message, string $spreadsheet_id, string $sheet_id)
     {
-        $sheets = SpreadsheetApi::makeSheetsClient();
+        $this->message = $message;
+        $this->spreadsheet_id = $spreadsheet_id;
+        $this->sheet_id = $sheet_id;
+    }
+    /**
+     * スプレッドシートへ書き込みを行う
+     * @return void
+     */
+    public function insertSpreadsheet(): void
+    {
+        $sheets = $this->makeSheets();
 
-        $sheet_name = SpreadsheetApi::getSheetName($sheet_id, $spreadsheet_id, $sheets);
-        $post_row = SpreadsheetApi::getRow($sheet_name, $spreadsheet_id, $sheets);
-        $values = SpreadsheetApi::setValues($slack_message);
-
+        $sheet_name = $this->getSheetName($this->sheet_id, $this->spreadsheet_id, $sheets);
+        $insert_row = $this->calculateInsertRow($sheet_name, $this->spreadsheet_id, $sheets);
+        $values = $this->setValues($this->message);
         try {
-            $sheets->spreadsheets_values->append($spreadsheet_id, $sheet_name.'!A'.$post_row, $values, ["valueInputOption" => 'USER_ENTERED']);
+            $sheets->spreadsheets_values->append($this->spreadsheet_id, $sheet_name.'!A'.$insert_row, $values, ["valueInputOption" => 'USER_ENTERED']);
         } catch (Exception $e) {
-            return false;
+            throw $e;
         }
-
-        return true;
     }
 
     /**
      * sheetsクライアントを作成する
      * @return Sheets
      */
-    public static function makeSheetsClient(): Sheets
+    public function makeSheets(): Sheets
     {
         $credentials_path = storage_path('app/json/credentials.json');
         $client = new Client();
@@ -56,7 +72,7 @@ class SpreadsheetApi
      * @param Sheets $sheets_client スプレッドシート操作クライアント
      * @return string $sheet_name[$sheet_id] 対象のシート名
      */
-    public static function getSheetName(string $sheet_id, string $spreadsheet_id, Sheets $sheets_client): string
+    public function getSheetName(string $sheet_id, string $spreadsheet_id, Sheets $sheets_client): string
     {
         $spreadsheet_info = $sheets_client->spreadsheets->get($spreadsheet_id);
         $sheets_name = [];
@@ -76,7 +92,7 @@ class SpreadsheetApi
      * @param Sheets $sheets_client スプレッドシート操作クライアント
      * @return int 書き込み行番号
      */
-    public static function getRow(string $sheet_name, string $spreadsheet_id, Sheets $sheets_client): int
+    public function calculateInsertRow(string $sheet_name, string $spreadsheet_id, Sheets $sheets_client): int
     {
         $range = $sheet_name;
         $response = $sheets_client->spreadsheets_values->get($spreadsheet_id, $range);
@@ -89,7 +105,7 @@ class SpreadsheetApi
      * @param string $slack_message slackから送られて来たメッセージ
      * @return ValueRange $values
      */
-    public static function setValues(string $slack_message): ValueRange
+    public function setValues(string $slack_message): ValueRange
     {
         $values = new ValueRange();
         $values->setValues([
