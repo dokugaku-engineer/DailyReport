@@ -26,6 +26,7 @@ class SlackPostsController extends Controller
     public function store(SlackPostsRequest $request)
     {
         $validated = $request->validated();
+
         if ($validated['type'] == 'url_verification') {
             return response()->json(["challenge" => $validated['challenge']]);
         }

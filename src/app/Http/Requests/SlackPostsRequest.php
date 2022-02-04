@@ -37,6 +37,10 @@ class SlackPostsRequest extends ApiRequest
     {
         $validator->after(function ($validator) {
             $request = $this->all();
+            
+            if($request['type'] == 'url_verification'){
+                return ;
+            }
             $slack_channel = SlackChannel::where('slack_channel_id', $request['event']['channel'])->first();
             $key_word = $slack_channel->slackToSpreadsheets()->value('key_word');
 
