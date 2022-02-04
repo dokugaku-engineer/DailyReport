@@ -45,21 +45,4 @@ class SlackMessage extends Model
             'message' => $message
         ]);
     }
-
-    /**
-     * 日報として扱うかキーワードをチェックする
-     * @param string $key_word 日報投稿のトリガーとなる文字列
-     * @param string $message slackから送られて来たメッセージ
-     * @return void
-     */
-    public static function checkKeyWord(string $key_word, string $message)
-    {
-        if (preg_match('/'.$key_word.'/', $message) == 0) {
-            $response = response()->json([
-                'status' => 400,
-                'error' => 'Bad Request',
-            ], 400);
-            throw new HttpResponseException($response);
-        }
-    }
 }
