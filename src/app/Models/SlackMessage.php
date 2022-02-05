@@ -31,7 +31,7 @@ class SlackMessage extends Model
      * @param string $message slackから送られてくるメッセージ
      * @return SlackMessage
      */
-    public function setParamOfSlackMessage(string $team_id, string $user_id, string $channel_id, string $message): SlackMessage
+    public function setParam(string $team_id, string $user_id, string $channel_id, string $message): SlackMessage
     {
         $slack_team = SlackTeam::where('slack_team_id', $team_id)->first();
 

@@ -27,12 +27,13 @@ class SlackPostsController extends Controller
     {
         $validated = $request->validated();
 
+        // SlackEventAPI経由でメッセージを連携する際、まず「チャレンジリクエスト」が送られるため、このレスポンスを行い連携先の正常性を証明します。
         if ($validated['type'] == 'url_verification') {
             return response()->json(["challenge" => $validated['challenge']]);
         }
 
         $slack_message = new SlackMessage();
-        $slack_message->setParamOfSlackMessage($validated['team_id'], $validated['event']['user'], $validated['event']['channel'], $validated['event']['text']);
+        $slack_message->setParam($validated['team_id'], $validated['event']['user'], $validated['event']['channel'], $validated['event']['text']);
 
         DB::beginTransaction();
 
@@ -42,10 +43,10 @@ class SlackPostsController extends Controller
             $spreadsheet_id = Spreadsheet::where('id', $slack_to_spreadsheet->spreadsheets_id)->value('spreadsheet_id');
             $sheet_id = Sheet::where(['spreadsheets_id' => $slack_to_spreadsheet->spreadsheets_id], ['slack_users_id' => $slack_message->slack_users_id])->value('sheet_id');
 
-            $spreadsheet = new SpreadsheetApi($slack_message->message, $spreadsheet_id, $sheet_id);
-            $spreadsheet->insertSpreadsheet();
-
+            $spreadsheet = new SpreadsheetApi($spreadsheet_id, $sheet_id);
+            $spreadsheet->insertSpreadsheet($slack_message->message);
         } catch (Exception $e) {
+            DB::rollBack();
             throw $e;
         }
         DB::commit();

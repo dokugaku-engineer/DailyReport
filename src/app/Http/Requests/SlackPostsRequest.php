@@ -37,15 +37,15 @@ class SlackPostsRequest extends ApiRequest
     {
         $validator->after(function ($validator) {
             $request = $this->all();
-            
-            if($request['type'] == 'url_verification'){
+
+            if ($request['type'] == 'url_verification') {
                 return ;
             }
             $slack_channel = SlackChannel::where('slack_channel_id', $request['event']['channel'])->first();
-            $key_word = $slack_channel->slackToSpreadsheets()->value('key_word');
+            $keyword = $slack_channel->slackToSpreadsheets()->value('key_word');
 
-            if (preg_match('/'.$key_word.'/', $request['event']['text']) == 0) {
-                $validator->errors()->add('validation', 'No key word');
+            if (preg_match('/'.$keyword.'/', $request['event']['text']) == 0) {
+                $validator->errors()->add('validation', 'No keyword');
             }
         });
     }
