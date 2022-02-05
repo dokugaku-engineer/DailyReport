@@ -41,8 +41,7 @@ class SlackPostsController extends Controller
             $slack_message->save();
             $slack_to_spreadsheet = SlackToSpreadsheet::where('slack_channels_id', $slack_message->slack_channels_id)->first();
             $spreadsheet_id = Spreadsheet::where('id', $slack_to_spreadsheet->spreadsheets_id)->value('spreadsheet_id');
-            $sheet_id = Sheet::where(['spreadsheets_id' => $slack_to_spreadsheet->spreadsheets_id], ['slack_users_id' => $slack_message->slack_users_id])->value('sheet_id');
-
+            $sheet_id = Sheet::where([['spreadsheets_id', '=', $slack_to_spreadsheet->spreadsheets_id], ['slack_users_id', '=', $slack_message->slack_users_id]])->value('sheet_id');
             $spreadsheet = new SpreadsheetApi($spreadsheet_id, $sheet_id);
             $spreadsheet->insertSpreadsheet($slack_message->message);
         } catch (Exception $e) {
